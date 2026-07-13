@@ -1,0 +1,191 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>site-craft — device d3 · the dither field</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Fragment+Mono&family=Wix+Madefor+Text:wght@400..800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper: oklch(1 0 0);
+    --ink: oklch(0.2 0.005 60);
+    --red: oklch(0.55 0.21 29);
+    --red-deep: oklch(0.48 0.19 29);
+    --muted: oklch(0.44 0.06 29);
+    --hair: oklch(0.2 0.005 60 / 0.25);
+    --display:"Anton",system-ui,sans-serif;
+    --body:"Wix Madefor Text",system-ui,sans-serif;
+    --mono:"Fragment Mono",ui-monospace,monospace;
+  }
+  *{ margin:0; box-sizing:border-box; }
+  body{
+    background:var(--paper); color:var(--ink);
+    font-family:var(--body); line-height:1.55;
+    min-height:100svh; padding: clamp(1.25rem, 4vw, 3.5rem);
+    display:flex; flex-direction:column;
+  }
+  a{ color:inherit; }
+  :focus-visible{ outline:2px solid var(--red); outline-offset:2px; }
+
+  .slug{
+    display:flex; justify-content:space-between; gap:1rem; flex-wrap:wrap;
+    font-family:var(--mono); font-size:0.8125rem; color:var(--muted);
+    border-bottom:1px solid var(--hair); padding-bottom:0.75rem;
+    margin-bottom: clamp(2.5rem, 7vh, 5rem);
+  }
+  .slug b{ color:var(--ink); font-weight:400; }
+
+  .job{
+    display:grid; grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);
+    gap: clamp(2rem, 5vw, 4rem); align-items:center; max-width:76rem;
+  }
+  h1{
+    font-family:var(--display); font-weight:400;
+    font-size: clamp(3.2rem, 8vw, 6rem);
+    line-height:0.96; letter-spacing:-0.005em;
+    text-transform:uppercase; max-width:11ch; text-wrap:balance;
+  }
+  .sub{ margin-top: clamp(1.75rem, 4vh, 2.5rem); max-width:52ch; font-size:1.125rem; }
+  .sub .lead{ font-weight:700; }
+  .sub .who{ color:var(--muted); }
+
+  .dithbox{ justify-self:end; position:relative; }
+  canvas#dith{
+    width:min(30vw, 440px); height:min(30vw, 440px);
+    image-rendering:pixelated; display:block;
+    mix-blend-mode:multiply;
+  }
+  .dithbox .dlabel{
+    position:absolute; left:0; bottom:-1.5rem;
+    font-family:var(--mono); font-size:0.6875rem; color:var(--muted); letter-spacing:0.06em;
+  }
+
+  .approve{ margin-top: clamp(2rem, 5vh, 3rem); display:grid; gap:1.25rem; max-width:56rem; }
+  .cmdrow{ display:flex; align-items:stretch; flex-wrap:wrap; border:1px solid var(--ink); }
+  .cmd{ font-family:var(--mono); font-size:1rem; padding:1rem 1.25rem; flex:1 1 auto; min-width:0; align-self:center; overflow-wrap:anywhere; }
+  .cmd .dollar{ color:var(--red); }
+  button.copy{
+    font-family:var(--body); font-weight:700; font-size:0.9375rem;
+    background:var(--red); color:var(--paper); border:0; padding:1rem 1.5rem; cursor:pointer;
+    transition: background-color 140ms ease-out;
+  }
+  button.copy:hover{ background:var(--red-deep); }
+  button.copy.done{ background:var(--ink); }
+  .sig{ display:flex; align-items:baseline; gap:0.9rem; flex-wrap:wrap; color:var(--muted); font-size:0.9375rem; }
+  .pausei{ display:inline-block; width:11px; height:13px; border-left:4px solid var(--red); border-right:4px solid var(--red); transform:translateY(1px); }
+  .sig .line{ flex:1 1 12rem; border-bottom:1px solid var(--ink); min-height:1.4em; }
+
+  .ticket{
+    margin-top:auto; padding-top: clamp(2rem, 6vh, 3rem);
+    display:flex; justify-content:space-between; align-items:flex-end; gap:1.5rem; flex-wrap:wrap;
+  }
+  .swatches{ display:flex; align-items:flex-end; }
+  .swatches .k, .swatches .r{ width:30px; height:18px; display:inline-block; }
+  .swatches .k{ background:var(--ink); }
+  .swatches .r{ background:var(--red); margin-left:-12px; mix-blend-mode:multiply; }
+  .swatches .label{ font-family:var(--mono); font-size:0.6875rem; color:var(--muted); margin-left:0.75rem; }
+  .phases{ font-family:var(--mono); font-size:0.8125rem; color:var(--muted); border-top:1px solid var(--hair); padding-top:0.75rem; }
+  .phases b{ font-weight:400; color:var(--red-deep); }
+
+  @media (max-width:860px){
+    .job{ grid-template-columns:1fr; }
+    .dithbox{ justify-self:start; }
+    canvas#dith{ width:min(70vw, 320px); height:min(70vw, 320px); }
+    button.copy{ width:100%; }
+  }
+</style>
+</head>
+<body>
+  <header class="slug">
+    <span><b>site-craft</b> · marketing-site workflow for AI agents</span>
+    <span>device d3 · the dither field — move your pointer through it · <a href="https://github.com/adrianleb/site-craft-skill">github</a></span>
+  </header>
+
+  <main>
+    <div class="job">
+      <div>
+        <h1>Approved, then shipped.</h1>
+        <p class="sub"><span class="lead">Every pixel passes a press check before it goes anywhere.</span>
+        A phased, user-gated workflow that makes an AI coding agent design like a small studio —
+        a written brief before pixels, divergent comps, a screenshot loop so it sees what it
+        builds, four gates before “done”. <span class="who">Extracted from a real build, not a
+        template.</span></p>
+      </div>
+      <div class="dithbox">
+        <canvas id="dith" width="88" height="88" aria-hidden="true"></canvas>
+        <span class="dlabel">85 lpi, one ink — the halftone decides where the ink sits</span>
+      </div>
+    </div>
+
+    <section class="approve" aria-label="install">
+      <div class="cmdrow">
+        <code class="cmd" translate="no"><span class="dollar">$</span> npx skills add adrianleb/site-craft-skill</code>
+        <button class="copy" type="button" data-cmd="npx skills add adrianleb/site-craft-skill">Copy</button>
+      </div>
+      <p class="sig"><span class="pausei" aria-hidden="true"></span> every taste decision waits for a signature — yours. <span class="line" aria-hidden="true"></span></p>
+    </section>
+  </main>
+
+  <footer class="ticket">
+    <div class="swatches" aria-hidden="true">
+      <span class="k"></span><span class="r"></span>
+      <span class="label">K + red, overprint</span>
+    </div>
+    <p class="phases"><b>0</b> brief · <b>1</b> encode · <b>2</b> explore · <b>3</b> build · <b>4</b> gates · <b>5</b> ship</p>
+  </footer>
+
+<script>
+  const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const cvs = document.getElementById('dith'), g = cvs.getContext('2d');
+  const N = 88;
+  const B = [ // 8x8 Bayer
+    [0,32,8,40,2,34,10,42],[48,16,56,24,50,18,58,26],
+    [12,44,4,36,14,46,6,38],[60,28,52,20,62,30,54,22],
+    [3,35,11,43,1,33,9,41],[51,19,59,27,49,17,57,25],
+    [15,47,7,39,13,45,5,37],[63,31,55,23,61,29,53,21]
+  ];
+  // paper + red as device pixels
+  const RED = [199, 62, 29], PAPER = [255,255,255];
+  let mx = -10, my = -10; // pointer in cell coords
+  cvs.addEventListener('pointermove', e => {
+    const r = cvs.getBoundingClientRect();
+    mx = (e.clientX - r.left)/r.width * N;
+    my = (e.clientY - r.top)/r.height * N;
+  });
+  cvs.addEventListener('pointerleave', () => { mx = my = -10; });
+
+  const img = g.createImageData(N, N);
+  function frame(t){
+    const T = t/1000;
+    const cx = N/2 + Math.sin(T*0.5)*4, cy = N/2 + Math.cos(T*0.37)*4;
+    const r = N*(0.34 + 0.05*Math.sin(T*0.8));
+    for (let y=0; y<N; y++){
+      for (let x=0; x<N; x++){
+        const dx = x-cx, dy = y-cy;
+        let lum = 1.25 - Math.hypot(dx,dy)/r;                    // disc falloff
+        const pdx = x-mx, pdy = y-my;
+        lum += 0.65*Math.exp(-(pdx*pdx+pdy*pdy)/90);             // pointer adds ink
+        lum += 0.05*Math.sin(T*2 + x*0.35 + y*0.21);             // breath
+        const th = (B[y&7][x&7]+0.5)/64;
+        const on = lum > th;
+        const i = (y*N+x)*4, c = on ? RED : PAPER;
+        img.data[i]=c[0]; img.data[i+1]=c[1]; img.data[i+2]=c[2]; img.data[i+3]=255;
+      }
+    }
+    g.putImageData(img, 0, 0);
+    if (!reduced) requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(frame);
+
+  document.querySelector('.copy').addEventListener('click', async (e) => {
+    const b = e.currentTarget;
+    try { await navigator.clipboard.writeText(b.dataset.cmd); }
+    catch { const t=document.createElement('textarea'); t.value=b.dataset.cmd; document.body.append(t); t.select(); document.execCommand('copy'); t.remove(); }
+    b.textContent = 'Copied'; b.classList.add('done');
+    setTimeout(() => { b.textContent='Copy'; b.classList.remove('done'); }, 2000);
+  });
+</script>
+</body>
+</html>

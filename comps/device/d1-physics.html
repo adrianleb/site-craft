@@ -1,0 +1,226 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>site-craft — device d1 · the physics pair</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Fragment+Mono&family=Wix+Madefor+Text:wght@400..800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper: oklch(1 0 0);
+    --ink: oklch(0.2 0.005 60);
+    --red: oklch(0.55 0.21 29);
+    --red-deep: oklch(0.48 0.19 29);
+    --muted: oklch(0.44 0.06 29);
+    --hair: oklch(0.2 0.005 60 / 0.25);
+    --display:"Anton",system-ui,sans-serif;
+    --body:"Wix Madefor Text",system-ui,sans-serif;
+    --mono:"Fragment Mono",ui-monospace,monospace;
+  }
+  *{ margin:0; box-sizing:border-box; }
+  body{
+    background:var(--paper); color:var(--ink);
+    font-family:var(--body); line-height:1.55;
+    min-height:100svh; padding: clamp(1.25rem, 4vw, 3.5rem);
+    display:flex; flex-direction:column;
+  }
+  a{ color:inherit; }
+  :focus-visible{ outline:2px solid var(--red); outline-offset:2px; }
+
+  .slug{
+    display:flex; justify-content:space-between; gap:1rem; flex-wrap:wrap;
+    font-family:var(--mono); font-size:0.8125rem; color:var(--muted);
+    border-bottom:1px solid var(--hair); padding-bottom:0.75rem;
+    margin-bottom: clamp(2.5rem, 7vh, 5rem);
+  }
+  .slug b{ color:var(--ink); font-weight:400; }
+
+  .press{ position:relative; max-width:72rem; }
+  h1{
+    font-family:var(--display); font-weight:400;
+    font-size: clamp(3.2rem, 8.6vw, 6rem);
+    line-height:0.96; letter-spacing:-0.005em;
+    text-transform:uppercase; max-width:11ch; text-wrap:balance;
+  }
+  .sub{ margin-top: clamp(1.75rem, 4vh, 2.5rem); max-width:56ch; font-size:1.125rem; }
+  .sub .lead{ font-weight:700; }
+  .sub .who{ color:var(--muted); }
+
+  .approve{ margin-top: clamp(2rem, 5vh, 3rem); display:grid; gap:1.25rem; max-width:56rem; position:relative; z-index:2; }
+  .cmdrow{ display:flex; align-items:stretch; flex-wrap:wrap; border:1px solid var(--ink); background:var(--paper); }
+  .cmd{ font-family:var(--mono); font-size:1rem; padding:1rem 1.25rem; flex:1 1 auto; min-width:0; align-self:center; overflow-wrap:anywhere; }
+  .cmd .dollar{ color:var(--red); }
+  button.copy{
+    font-family:var(--body); font-weight:700; font-size:0.9375rem;
+    background:var(--red); color:var(--paper); border:0; padding:1rem 1.5rem; cursor:pointer;
+    transition: background-color 140ms ease-out;
+  }
+  button.copy:hover{ background:var(--red-deep); }
+  button.copy.done{ background:var(--ink); }
+  .sig{ display:flex; align-items:baseline; gap:0.9rem; flex-wrap:wrap; color:var(--muted); font-size:0.9375rem; }
+  .pausei{ display:inline-block; width:11px; height:13px; border-left:4px solid var(--red); border-right:4px solid var(--red); transform:translateY(1px); }
+  .sig .line{ flex:1 1 12rem; border-bottom:1px solid var(--ink); min-height:1.4em; }
+
+  .ticket{
+    margin-top:auto; padding-top: clamp(2rem, 6vh, 3rem);
+    display:flex; justify-content:space-between; align-items:flex-end; gap:1.5rem; flex-wrap:wrap;
+  }
+  .swatches{ display:flex; align-items:flex-end; }
+  .swatches .k, .swatches .r{ width:30px; height:18px; display:inline-block; }
+  .swatches .k{ background:var(--ink); }
+  .swatches .r{ background:var(--red); margin-left:-12px; mix-blend-mode:multiply; }
+  .swatches .label{ font-family:var(--mono); font-size:0.6875rem; color:var(--muted); margin-left:0.75rem; }
+  .phases{ font-family:var(--mono); font-size:0.8125rem; color:var(--muted); border-top:1px solid var(--hair); padding-top:0.75rem; }
+  .phases b{ font-weight:400; color:var(--red-deep); }
+
+  /* the field the pair lives in */
+  .fieldwrap{ position:absolute; top:-2.5rem; left:0; right:0; pointer-events:none; }
+  .bod{
+    position:absolute; top:0; left:0; pointer-events:auto; cursor:grab;
+    mix-blend-mode:multiply; touch-action:none; user-select:none;
+  }
+  .bod:active{ cursor:grabbing; }
+  .bod.pause{ width:104px; height:138px; display:flex; justify-content:space-between; }
+  .bod.pause i{ display:block; width:38%; background:var(--red); }
+  .bod.play{ width:126px; height:138px; background:var(--red); clip-path:polygon(0 0, 100% 50%, 0 100%); }
+  @media (max-width:720px){
+    .bod.pause{ width:64px; height:86px; }
+    .bod.play{ width:78px; height:86px; }
+    button.copy{ width:100%; }
+  }
+</style>
+</head>
+<body>
+  <header class="slug">
+    <span><b>site-craft</b> · marketing-site workflow for AI agents</span>
+    <span>device d1 · the pair, with physics — grab and throw them · <a href="https://github.com/adrianleb/site-craft-skill">github</a></span>
+  </header>
+
+  <main class="press">
+    <h1 id="h1">Approved, then shipped.</h1>
+    <p class="sub"><span class="lead">Every pixel passes a press check before it goes anywhere.</span>
+    A phased, user-gated workflow that makes an AI coding agent design like a small studio —
+    a written brief before pixels, divergent comps, a screenshot loop so it sees what it
+    builds, four gates before “done”. <span class="who">Extracted from a real build, not a
+    template.</span></p>
+
+    <section class="approve" aria-label="install">
+      <div class="cmdrow">
+        <code class="cmd" translate="no"><span class="dollar">$</span> npx skills add adrianleb/site-craft-skill</code>
+        <button class="copy" type="button" data-cmd="npx skills add adrianleb/site-craft-skill">Copy</button>
+      </div>
+      <p class="sig"><span class="pausei" aria-hidden="true"></span> every taste decision waits for a signature — yours. <span class="line" aria-hidden="true"></span></p>
+    </section>
+
+    <div class="fieldwrap" id="field" aria-hidden="true">
+      <div class="bod pause" id="bp"><i></i><i></i></div>
+      <div class="bod play" id="bl"></div>
+    </div>
+  </main>
+
+  <footer class="ticket">
+    <div class="swatches" aria-hidden="true">
+      <span class="k"></span><span class="r"></span>
+      <span class="label">K + red, overprint</span>
+    </div>
+    <p class="phases"><b>0</b> brief · <b>1</b> encode · <b>2</b> explore · <b>3</b> build · <b>4</b> gates · <b>5</b> ship</p>
+  </footer>
+
+<script>
+  const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const field = document.getElementById('field');
+  const press = document.querySelector('.press');
+  const approve = document.querySelector('.approve');
+
+  const h1el = document.getElementById('h1');
+  function fieldH(){ return h1el.offsetTop + h1el.offsetHeight + 46; } // the galley shelf: bodies rest on the headline's baseline band
+  field.style.height = fieldH() + 'px';
+  addEventListener('resize', () => { field.style.height = fieldH() + 'px'; });
+
+  const G = 2300, WALL = 0.66, FLOOR = 0.7;
+  const bodies = [
+    { el:document.getElementById('bp'), w:104, h:138 },
+    { el:document.getElementById('bl'), w:126, h:138 },
+  ].map((b,i) => Object.assign(b, {
+    x: field.clientWidth * (0.52 + i*0.17), y: -320 - i*260,
+    vx: (i? -30: 40), vy: 0, a: (i? 0.1: -0.12), va: 0, sleep:false, grab:null,
+  }));
+  if (matchMedia('(max-width: 720px)').matches){ bodies[0].w=64; bodies[0].h=86; bodies[1].w=78; bodies[1].h=86; }
+
+  function render(b){ b.el.style.transform = `translate(${b.x}px,${b.y}px) rotate(${b.a}rad)`; }
+
+  if (reduced){
+    bodies[0].x = field.clientWidth*0.56; bodies[0].y = 10;
+    bodies[1].x = field.clientWidth*0.72; bodies[1].y = 26;
+    bodies.forEach(render);
+  } else {
+    let last = performance.now();
+    function step(t){
+      const dt = Math.min((t-last)/1000, 0.03); last = t;
+      const W = field.clientWidth, H = field.clientHeight;
+      for (const b of bodies){
+        if (b.grab || b.sleep){ render(b); continue; }
+        b.vy += G*dt; b.x += b.vx*dt; b.y += b.vy*dt; b.a += b.va*dt;
+        if (b.x < 0){ b.x = 0; b.vx = -b.vx*WALL; b.va += b.vy*4e-4; }
+        if (b.x + b.w > W){ b.x = W - b.w; b.vx = -b.vx*WALL; b.va -= b.vy*4e-4; }
+        if (b.y + b.h > H){
+          b.y = H - b.h; b.vy = -b.vy*FLOOR; b.vx *= 0.9; b.va *= 0.75;
+          if (Math.abs(b.vy) < 50 && Math.abs(b.vx) < 25){ b.vx = b.vy = b.va = 0; b.sleep = true; b.a *= 0.6; }
+        }
+        b.va *= 0.995;
+        render(b);
+      }
+      // pair collision (circle approx)
+      const [p,q] = bodies;
+      const dx = (q.x+q.w/2)-(p.x+p.w/2), dy = (q.y+q.h/2)-(p.y+p.h/2);
+      const dist = Math.hypot(dx,dy) || 1, min = (p.w+q.w)/2 * 0.82;
+      if (dist < min && !p.grab && !q.grab){
+        const nx = dx/dist, ny = dy/dist, push = (min-dist)/2;
+        p.x -= nx*push; p.y -= ny*push; q.x += nx*push; q.y += ny*push;
+        const rvx = q.vx-p.vx, rvy = q.vy-p.vy, rel = rvx*nx + rvy*ny;
+        if (rel < 0){
+          const j = -1.82*rel/2;
+          p.vx -= j*nx; p.vy -= j*ny; q.vx += j*nx; q.vy += j*ny;
+          p.va -= rel*8e-4; q.va += rel*8e-4;
+          p.sleep = q.sleep = false;
+        }
+      }
+      requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+
+    // grab & throw
+    for (const b of bodies){
+      b.el.addEventListener('pointerdown', e => {
+        b.grab = { dx: e.clientX - b.x, dy: e.clientY - b.y, hist: [] };
+        b.sleep = false; b.el.setPointerCapture(e.pointerId); e.preventDefault();
+      });
+      b.el.addEventListener('pointermove', e => {
+        if (!b.grab) return;
+        b.x = e.clientX - b.grab.dx; b.y = e.clientY - b.grab.dy;
+        b.grab.hist.push({x:b.x, y:b.y, t:performance.now()});
+        if (b.grab.hist.length > 5) b.grab.hist.shift();
+      });
+      b.el.addEventListener('pointerup', () => {
+        const h = b.grab && b.grab.hist;
+        if (h && h.length > 1){
+          const a = h[0], z = h[h.length-1], dt = Math.max((z.t-a.t)/1000, 0.016);
+          b.vx = (z.x-a.x)/dt * 0.9; b.vy = (z.y-a.y)/dt * 0.9;
+        }
+        b.grab = null;
+      });
+    }
+  }
+
+  document.querySelector('.copy').addEventListener('click', async (e) => {
+    const b = e.currentTarget;
+    try { await navigator.clipboard.writeText(b.dataset.cmd); }
+    catch { const t=document.createElement('textarea'); t.value=b.dataset.cmd; document.body.append(t); t.select(); document.execCommand('copy'); t.remove(); }
+    b.textContent = 'Copied'; b.classList.add('done');
+    setTimeout(() => { b.textContent='Copy'; b.classList.remove('done'); }, 2000);
+  });
+</script>
+</body>
+</html>

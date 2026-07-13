@@ -1,0 +1,187 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>site-craft — device d2 · the numbering machine</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Fragment+Mono&family=Wix+Madefor+Text:wght@400..800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper: oklch(1 0 0);
+    --ink: oklch(0.2 0.005 60);
+    --red: oklch(0.55 0.21 29);
+    --red-deep: oklch(0.48 0.19 29);
+    --muted: oklch(0.44 0.06 29);
+    --hair: oklch(0.2 0.005 60 / 0.25);
+    --display:"Anton",system-ui,sans-serif;
+    --body:"Wix Madefor Text",system-ui,sans-serif;
+    --mono:"Fragment Mono",ui-monospace,monospace;
+  }
+  *{ margin:0; box-sizing:border-box; }
+  body{
+    background:var(--paper); color:var(--ink);
+    font-family:var(--body); line-height:1.55;
+    min-height:100svh; padding: clamp(1.25rem, 4vw, 3.5rem);
+    display:flex; flex-direction:column;
+  }
+  a{ color:inherit; }
+  :focus-visible{ outline:2px solid var(--red); outline-offset:2px; }
+
+  .slug{
+    display:flex; justify-content:space-between; gap:1rem; flex-wrap:wrap;
+    font-family:var(--mono); font-size:0.8125rem; color:var(--muted);
+    border-bottom:1px solid var(--hair); padding-bottom:0.75rem;
+    margin-bottom: clamp(2.5rem, 7vh, 5rem);
+  }
+  .slug b{ color:var(--ink); font-weight:400; }
+
+  .job{
+    display:grid; grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);
+    gap: clamp(2rem, 5vw, 4.5rem); align-items:start; max-width:76rem;
+  }
+  h1{
+    font-family:var(--display); font-weight:400;
+    font-size: clamp(3.2rem, 8vw, 6rem);
+    line-height:0.96; letter-spacing:-0.005em;
+    text-transform:uppercase; max-width:11ch; text-wrap:balance;
+  }
+  .sub{ margin-top: clamp(1.75rem, 4vh, 2.5rem); max-width:52ch; font-size:1.125rem; }
+  .sub .lead{ font-weight:700; }
+  .sub .who{ color:var(--muted); }
+
+  /* the numbering machine */
+  .machine{
+    justify-self:end; text-align:center; cursor:pointer; user-select:none;
+    border:2px solid var(--ink); padding:1.1rem 1.4rem 1.3rem; position:relative;
+    background:var(--paper);
+  }
+  .machine .dlabel{
+    font-family:var(--mono); font-size:0.6875rem; letter-spacing:0.08em; color:var(--muted);
+    display:block; margin-bottom:0.4rem;
+  }
+  .window{
+    height:1em; overflow:hidden;
+    font-family:var(--display); font-size:clamp(5.5rem, 9vw, 8.5rem); line-height:1;
+    color:var(--red);
+  }
+  .col{ transition:transform 240ms cubic-bezier(.2,1.25,.4,1); }
+  .col span{ display:block; height:1em; }
+  .tag{
+    position:absolute; right:-1.6rem; bottom:3.2rem; transform:rotate(-8deg) scale(0);
+    border:2px solid var(--red); color:var(--red-deep); background:var(--paper);
+    font-family:var(--mono); font-size:0.6875rem; letter-spacing:0.06em;
+    padding:0.2rem 0.5rem; transition:transform 200ms cubic-bezier(.16,1.4,.3,1);
+  }
+  .tag.on{ transform:rotate(-8deg) scale(1); }
+  .machine .hint{ font-family:var(--mono); font-size:0.625rem; color:var(--muted); display:block; margin-top:0.6rem; }
+  @media (prefers-reduced-motion: reduce){ .col, .tag{ transition:none; } }
+
+  .approve{ margin-top: clamp(2rem, 5vh, 3rem); display:grid; gap:1.25rem; max-width:56rem; }
+  .cmdrow{ display:flex; align-items:stretch; flex-wrap:wrap; border:1px solid var(--ink); }
+  .cmd{ font-family:var(--mono); font-size:1rem; padding:1rem 1.25rem; flex:1 1 auto; min-width:0; align-self:center; overflow-wrap:anywhere; }
+  .cmd .dollar{ color:var(--red); }
+  button.copy{
+    font-family:var(--body); font-weight:700; font-size:0.9375rem;
+    background:var(--red); color:var(--paper); border:0; padding:1rem 1.5rem; cursor:pointer;
+    transition: background-color 140ms ease-out;
+  }
+  button.copy:hover{ background:var(--red-deep); }
+  button.copy.done{ background:var(--ink); }
+  .sig{ display:flex; align-items:baseline; gap:0.9rem; flex-wrap:wrap; color:var(--muted); font-size:0.9375rem; }
+  .pausei{ display:inline-block; width:11px; height:13px; border-left:4px solid var(--red); border-right:4px solid var(--red); transform:translateY(1px); }
+  .sig .line{ flex:1 1 12rem; border-bottom:1px solid var(--ink); min-height:1.4em; }
+
+  .ticket{
+    margin-top:auto; padding-top: clamp(2rem, 6vh, 3rem);
+    display:flex; justify-content:space-between; align-items:flex-end; gap:1.5rem; flex-wrap:wrap;
+  }
+  .swatches{ display:flex; align-items:flex-end; }
+  .swatches .k, .swatches .r{ width:30px; height:18px; display:inline-block; }
+  .swatches .k{ background:var(--ink); }
+  .swatches .r{ background:var(--red); margin-left:-12px; mix-blend-mode:multiply; }
+  .swatches .label{ font-family:var(--mono); font-size:0.6875rem; color:var(--muted); margin-left:0.75rem; }
+  .phases{ font-family:var(--mono); font-size:0.8125rem; color:var(--muted); border-top:1px solid var(--hair); padding-top:0.75rem; }
+  .phases b{ font-weight:400; color:var(--red-deep); }
+
+  @media (max-width:860px){
+    .job{ grid-template-columns:1fr; }
+    .machine{ justify-self:start; }
+    button.copy{ width:100%; }
+  }
+</style>
+</head>
+<body>
+  <header class="slug">
+    <span><b>site-craft</b> · marketing-site workflow for AI agents</span>
+    <span>device d2 · the numbering machine — click it · <a href="https://github.com/adrianleb/site-craft-skill">github</a></span>
+  </header>
+
+  <main>
+    <div class="job">
+      <div>
+        <h1>Approved, then shipped.</h1>
+        <p class="sub"><span class="lead">Every pixel passes a press check before it goes anywhere.</span>
+        A phased, user-gated workflow that makes an AI coding agent design like a small studio —
+        a written brief before pixels, divergent comps, a screenshot loop so it sees what it
+        builds, four gates before “done”. <span class="who">Extracted from a real build, not a
+        template.</span></p>
+      </div>
+
+      <div class="machine" id="machine" role="img" aria-label="press numbering machine counting phases 0 through 5, ending at shipped" tabindex="0">
+        <span class="dlabel">PHASE Nº</span>
+        <div class="window"><div class="col" id="col">
+          <span>0</span><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span>
+        </div></div>
+        <span class="tag" id="tag">SHIPPED</span>
+        <span class="hint">click to run the job again</span>
+      </div>
+    </div>
+
+    <section class="approve" aria-label="install">
+      <div class="cmdrow">
+        <code class="cmd" translate="no"><span class="dollar">$</span> npx skills add adrianleb/site-craft-skill</code>
+        <button class="copy" type="button" data-cmd="npx skills add adrianleb/site-craft-skill">Copy</button>
+      </div>
+      <p class="sig"><span class="pausei" aria-hidden="true"></span> every taste decision waits for a signature — yours. <span class="line" aria-hidden="true"></span></p>
+    </section>
+  </main>
+
+  <footer class="ticket">
+    <div class="swatches" aria-hidden="true">
+      <span class="k"></span><span class="r"></span>
+      <span class="label">K + red, overprint</span>
+    </div>
+    <p class="phases"><b>0</b> brief · <b>1</b> encode · <b>2</b> explore · <b>3</b> build · <b>4</b> gates · <b>5</b> ship</p>
+  </footer>
+
+<script>
+  const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const col = document.getElementById('col'), tag = document.getElementById('tag');
+  let timer = null;
+  function run(){
+    clearInterval(timer); tag.classList.remove('on');
+    if (reduced){ col.style.transform = 'translateY(-5em)'; tag.classList.add('on'); return; }
+    let i = 0; col.style.transform = 'translateY(0)';
+    timer = setInterval(() => {
+      i++;
+      col.style.transform = 'translateY(-' + i + 'em)';
+      if (i >= 5){ clearInterval(timer); setTimeout(() => tag.classList.add('on'), 260); }
+    }, 400);
+  }
+  const machine = document.getElementById('machine');
+  machine.addEventListener('click', run);
+  machine.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' '){ run(); e.preventDefault(); } });
+  addEventListener('load', () => setTimeout(run, 350));
+
+  document.querySelector('.copy').addEventListener('click', async (e) => {
+    const b = e.currentTarget;
+    try { await navigator.clipboard.writeText(b.dataset.cmd); }
+    catch { const t=document.createElement('textarea'); t.value=b.dataset.cmd; document.body.append(t); t.select(); document.execCommand('copy'); t.remove(); }
+    b.textContent = 'Copied'; b.classList.add('done');
+    setTimeout(() => { b.textContent='Copy'; b.classList.remove('done'); }, 2000);
+  });
+</script>
+</body>
+</html>
