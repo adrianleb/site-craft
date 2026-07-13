@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>site-craft — comp 03 · the working wall</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,200..800&family=Fragment+Mono&family=Wix+Madefor+Text:wght@400..800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper: oklch(1 0 0);
+    --ink: oklch(0.17 0.012 110);
+    --olive: oklch(0.35 0.075 110);
+    --olive-deep: oklch(0.28 0.06 110);
+    --signal: oklch(0.6 0.19 35);
+    --signal-deep: oklch(0.52 0.17 35);
+    --muted: oklch(0.45 0.05 110);
+    --hair: oklch(0.35 0.075 110 / 0.28);
+    --display: "Bricolage Grotesque", system-ui, sans-serif;
+    --body: "Wix Madefor Text", system-ui, sans-serif;
+    --mono: "Fragment Mono", ui-monospace, monospace;
+  }
+  *{ margin:0; box-sizing:border-box; }
+  body{
+    background:var(--paper); color:var(--ink);
+    font-family:var(--body); line-height:1.55;
+    padding: clamp(1.25rem, 3.5vw, 3.5rem);
+  }
+  a{ color:inherit; }
+  :focus-visible{ outline:2px solid var(--signal); outline-offset:2px; }
+
+  header{
+    display:flex; justify-content:space-between; align-items:baseline;
+    margin-bottom: clamp(2.5rem, 7vh, 5rem);
+  }
+  .wordmark{ font-weight:800; font-size:1.125rem; text-decoration:none; }
+  header nav a{ font-size:0.9375rem; color:var(--muted); }
+
+  .lede{ max-width:70rem; margin-bottom: clamp(2.5rem, 6vh, 4rem); }
+  h1{
+    font-family:var(--display); font-optical-sizing:auto;
+    font-weight:750; font-variation-settings:"wdth" 88;
+    font-size: clamp(2.75rem, 6.5vw, 5.25rem);
+    line-height:0.98; letter-spacing:-0.02em; text-wrap:balance;
+    color:var(--olive);
+  }
+  .lede p{
+    margin-top:1.25rem; max-width:58ch; font-size:1.125rem;
+  }
+
+  .wall{
+    display:grid; grid-template-columns:1.12fr 0.94fr 1.08fr 0.92fr;
+    gap: clamp(0.75rem, 1.6vw, 1.5rem);
+    align-items:start;
+    margin-bottom: clamp(2.5rem, 6vh, 4rem);
+  }
+  .wall .doc:nth-child(2){ margin-top:2rem; }
+  .wall .doc:nth-child(3){ margin-top:0.5rem; }
+  .wall .doc:nth-child(4){ margin-top:2.75rem; }
+  .doc{
+    border:1px solid var(--hair); background:var(--paper);
+    padding:1.1rem 1.2rem 1.3rem;
+    font-size:0.875rem; line-height:1.5;
+    transform: rotate(var(--tilt, 0deg));
+  }
+  .doc header{
+    display:flex; justify-content:space-between; margin:0 0 0.75rem;
+    font-family:var(--mono); font-size:0.6875rem; color:var(--muted);
+    border-bottom:1px solid var(--hair); padding-bottom:0.5rem;
+  }
+  .doc h2{
+    font-family:var(--display); font-weight:700; font-size:1.05rem;
+    line-height:1.2; margin-bottom:0.5rem; letter-spacing:-0.01em;
+  }
+  .doc p, .doc li{ color:var(--ink); }
+  .doc ul{ padding-left:1.1rem; margin:0.25rem 0 0; }
+  .doc .quote{ color:var(--olive); font-weight:600; }
+  .doc.term{ font-family:var(--mono); font-size:0.75rem; line-height:1.7; }
+  .doc.term .sha{ color:var(--signal-deep); }
+  .doc .stamp{
+    display:inline-block; margin-top:0.75rem; padding:0.15rem 0.5rem;
+    border:1.5px solid var(--signal); color:var(--signal-deep);
+    font-family:var(--mono); font-size:0.6875rem; letter-spacing:0.05em;
+    transform:rotate(-2deg);
+  }
+
+  .cta{
+    display:flex; align-items:center; gap:1.5rem; flex-wrap:wrap;
+    border-top:1px solid var(--hair); padding-top:1.75rem;
+  }
+  .cta .label{ font-size:0.9375rem; color:var(--muted); }
+  button.copy{
+    font-family:var(--mono); font-size:0.9375rem;
+    background:var(--olive); color:var(--paper);
+    border:0; padding:1rem 1.375rem; cursor:pointer;
+    transition: background-color 140ms ease-out;
+  }
+  button.copy:hover{ background:var(--olive-deep); }
+  button.copy.done{ background:var(--signal); }
+
+  @media (max-width:960px){
+    .wall{ grid-template-columns:repeat(2, 1fr); }
+    .wall .doc:nth-child(3){ margin-top:-1rem; }
+    .wall .doc:nth-child(4){ margin-top:0.75rem; }
+  }
+  @media (max-width:600px){
+    .wall{ grid-template-columns:1fr; }
+    .wall .doc:nth-child(n){ margin-top:0; }
+    .doc{ --tilt:0deg !important; }
+    button.copy{ width:100%; }
+  }
+</style>
+</head>
+<body>
+  <header>
+    <a class="wordmark" href="./">site-craft</a>
+    <nav><a href="https://github.com/adrianleb/site-craft-skill">GitHub</a></nav>
+  </header>
+
+  <section class="lede">
+    <h1>The process, shown&nbsp;working.</h1>
+    <p>site-craft makes an AI coding agent build your marketing site the way a small studio
+    would — and it leaves a paper trail. These are this site’s own working files, today.</p>
+  </section>
+
+  <section class="wall" aria-label="working files from this build">
+    <article class="doc" style="--tilt:-1.1deg">
+      <header><span>DESIGN.md</span><span>seed</span></header>
+      <h2>North star</h2>
+      <p><span class="quote">“A press check, not a mood board.”</span></p>
+      <ul>
+        <li>Olive is the ink.</li>
+        <li>Paper is white.</li>
+        <li>One signal color.</li>
+        <li>No gray.</li>
+      </ul>
+    </article>
+
+    <article class="doc" style="--tilt:0.9deg">
+      <header><span>SKILL.md</span><span>iron rules</span></header>
+      <h2>Screenshot everything you build, before showing it.</h2>
+      <p>Every artifact gets rendered at desktop and mobile, and the agent looks at the
+      screenshots itself and fixes what’s broken — before you ever see it.</p>
+    </article>
+
+    <article class="doc" style="--tilt:-0.4deg">
+      <header><span>FRICTION.md</span><span>F1–F9</span></header>
+      <h2>The run logs its own rough edges.</h2>
+      <p>“Skill says <em>detect</em> a browser tool, never says to smoke-test the loop
+      end-to-end…” — nine findings so far, filed while building this page.</p>
+      <span class="stamp">LOGGED, NOT HIDDEN</span>
+    </article>
+
+    <article class="doc term" style="--tilt:1.3deg">
+      <header><span>git log</span><span>branch: site</span></header>
+      <p><span class="sha">385eeec</span> Phase 1: brief encoded — press-check north star, Committed olive-on-white<br>
+      <span class="sha">ade9dd5</span> site-craft v1 — phased, user-gated marketing-site workflow skill</p>
+    </article>
+  </section>
+
+  <section class="cta" aria-label="install">
+    <button class="copy" type="button" data-cmd="npx skills add adrianleb/site-craft-skill" translate="no">$ npx skills add adrianleb/site-craft-skill</button>
+    <span class="label">Runs in Claude Code and friends. You art-direct; it does the rest.</span>
+  </section>
+
+<script>
+  document.querySelector('.copy').addEventListener('click', async (e) => {
+    const b = e.currentTarget, orig = b.textContent;
+    try { await navigator.clipboard.writeText(b.dataset.cmd); }
+    catch { const t=document.createElement('textarea'); t.value=b.dataset.cmd; document.body.append(t); t.select(); document.execCommand('copy'); t.remove(); }
+    b.textContent = 'copied ✓'; b.classList.add('done');
+    setTimeout(() => { b.textContent = orig; b.classList.remove('done'); }, 2000);
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>site-craft — comp 01 · the proof sheet</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=Fragment+Mono&family=Wix+Madefor+Text:wght@400..800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Symbols+2&text=%E2%8F%B8%E2%8F%BA&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper: oklch(1 0 0);
+    --ink: oklch(0.17 0.012 110);
+    --olive: oklch(0.35 0.075 110);
+    --olive-deep: oklch(0.28 0.06 110);
+    --signal: oklch(0.6 0.19 35);
+    --muted: oklch(0.45 0.05 110);
+    --hair: oklch(0.35 0.075 110 / 0.28);
+    --display: "Archivo", system-ui, sans-serif;
+    --body: "Wix Madefor Text", system-ui, sans-serif;
+    --mono: "Fragment Mono", ui-monospace, monospace;
+  }
+  *{ margin:0; box-sizing:border-box; }
+  body{
+    background:var(--paper); color:var(--ink);
+    font-family:var(--body); font-size:1rem; line-height:1.55;
+    min-height:100svh; display:grid; place-items:center;
+    padding: clamp(1.25rem, 4vw, 3.5rem);
+  }
+  a{ color:inherit; }
+  :focus-visible{ outline:2px solid var(--signal); outline-offset:2px; }
+
+  /* the sheet: content sits inside the trim; crop marks imply the edge */
+  .sheet{
+    position:relative; width:min(100%, 1120px);
+    padding: clamp(1.5rem, 4vw, 3.5rem) clamp(1rem, 3.5vw, 3rem);
+    display:flex; flex-direction:column; gap: clamp(2rem, 5vh, 3.5rem);
+  }
+  .crop{ position:absolute; width:22px; height:22px; }
+  .crop::before,.crop::after{ content:""; position:absolute; background:var(--olive); }
+  .crop::before{ width:100%; height:1px; }
+  .crop::after{ width:1px; height:100%; }
+  .crop.tl{ top:0; left:0; } .crop.tl::before{ top:0 } .crop.tl::after{ left:0 }
+  .crop.tr{ top:0; right:0; } .crop.tr::before{ top:0 } .crop.tr::after{ right:0 }
+  .crop.bl{ bottom:0; left:0; } .crop.bl::before{ bottom:0 } .crop.bl::after{ left:0 }
+  .crop.br{ bottom:0; right:0; } .crop.br::before{ bottom:0 } .crop.br::after{ right:0 }
+
+  .slug{
+    display:flex; justify-content:space-between; gap:1rem; flex-wrap:wrap;
+    font-family:var(--mono); font-size:0.8125rem; color:var(--muted);
+    border-bottom:1px solid var(--hair); padding-bottom:0.75rem;
+  }
+  .slug b{ color:var(--olive); font-weight:400; }
+
+  .plate h1{
+    font-family:var(--display);
+    font-variation-settings:"wdth" 118;
+    font-weight:860;
+    font-size: clamp(2.9rem, 7.8vw, 6rem);
+    line-height:0.98; letter-spacing:-0.025em;
+    color:var(--olive);
+    text-wrap:balance;
+    text-transform:uppercase;
+  }
+  .plate p{
+    margin-top:1.5rem; max-width:56ch; font-size:1.125rem; color:var(--ink);
+  }
+  .plate p .who{ color:var(--muted); }
+
+  .approve{
+    display:grid; gap:1.25rem;
+  }
+  .cmdrow{
+    display:flex; align-items:stretch; flex-wrap:wrap; gap:0;
+    border:1px solid var(--olive);
+  }
+  .cmd{
+    font-family:var(--mono); font-size:1rem;
+    padding:1rem 1.25rem; flex:1 1 auto; min-width:0;
+    overflow-wrap:anywhere; align-self:center;
+  }
+  .cmd .dollar{ color:var(--signal); }
+  button.copy{
+    font-family:var(--body); font-weight:700; font-size:0.9375rem;
+    background:var(--olive); color:var(--paper);
+    border:0; padding:1rem 1.5rem; cursor:pointer;
+    transition: background-color 140ms ease-out;
+  }
+  button.copy:hover{ background:var(--olive-deep); }
+  button.copy.done{ background:var(--signal); }
+  .sig{
+    display:flex; align-items:baseline; gap:1rem; flex-wrap:wrap;
+    color:var(--muted); font-size:0.9375rem;
+  }
+  .sig .line{ flex:1 1 12rem; border-bottom:1px solid var(--ink); min-height:1.4em; }
+  .sig .pause{ color:var(--signal); font-family:"Noto Sans Symbols 2", var(--body); }
+
+  .ticket{
+    display:flex; justify-content:space-between; align-items:center; gap:1.5rem;
+    border-top:1px solid var(--hair); padding-top:1rem; flex-wrap:wrap;
+  }
+  .bar{ display:flex; gap:0; }
+  .bar i{ width:22px; height:14px; display:block; }
+  .phases{
+    font-family:var(--mono); font-size:0.8125rem; color:var(--muted);
+    letter-spacing:0.01em;
+  }
+  .phases b{ font-weight:400; color:var(--olive); }
+
+  @media (max-width:640px){
+    body{ place-items:start center; }
+    .slug{ font-size:0.75rem; }
+    .cmd{ font-size:0.875rem; padding:0.875rem 1rem; }
+    button.copy{ width:100%; }
+    .ticket{ gap:0.75rem; }
+  }
+</style>
+</head>
+<body>
+  <main class="sheet">
+    <span class="crop tl" aria-hidden="true"></span><span class="crop tr" aria-hidden="true"></span>
+    <span class="crop bl" aria-hidden="true"></span><span class="crop br" aria-hidden="true"></span>
+
+    <header class="slug">
+      <span><b>site-craft</b> · marketing-site workflow for AI agents</span>
+      <span>proof nº 001 · pass 1 · <a href="https://github.com/adrianleb/site-craft-skill">github</a></span>
+    </header>
+
+    <section class="plate">
+      <h1>Nothing ships unseen.</h1>
+      <p>A phased, user-gated workflow that makes an AI coding agent design like a small
+      studio — a written brief before pixels, divergent comps, a screenshot loop so it sees
+      what it builds, four gates before “done”. <span class="who">Extracted from a real build,
+      not a template.</span></p>
+    </section>
+
+    <section class="approve" aria-label="install">
+      <div class="cmdrow">
+        <code class="cmd" translate="no"><span class="dollar">$</span> npx skills add adrianleb/site-craft-skill</code>
+        <button class="copy" type="button" data-cmd="npx skills add adrianleb/site-craft-skill">Copy</button>
+      </div>
+      <p class="sig"><span class="pause">⏸</span> every taste decision waits for a signature — yours. <span class="line" aria-hidden="true"></span></p>
+    </section>
+
+    <footer class="ticket">
+      <div class="bar" aria-hidden="true">
+        <i style="background:oklch(0.28 0.06 110)"></i><i style="background:oklch(0.35 0.075 110)"></i>
+        <i style="background:oklch(0.5 0.09 110)"></i><i style="background:oklch(0.6 0.19 35)"></i>
+        <i style="background:oklch(0.17 0.012 110)"></i><i style="background:#fff;border:1px solid var(--hair)"></i>
+      </div>
+      <p class="phases"><b>0</b> brief · <b>1</b> encode · <b>2</b> explore · <b>3</b> build · <b>4</b> gates · <b>5</b> ship</p>
+    </footer>
+  </main>
+
+<script>
+  document.querySelector('.copy').addEventListener('click', async (e) => {
+    const b = e.currentTarget;
+    try { await navigator.clipboard.writeText(b.dataset.cmd); }
+    catch { const t=document.createElement('textarea'); t.value=b.dataset.cmd; document.body.append(t); t.select(); document.execCommand('copy'); t.remove(); }
+    b.textContent = 'Copied'; b.classList.add('done');
+    setTimeout(() => { b.textContent='Copy'; b.classList.remove('done'); }, 2000);
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>site-craft — comp 04 · the transcript</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Familjen+Grotesk:wght@400..700&family=Fragment+Mono&family=Wix+Madefor+Text:wght@400..800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Symbols+2&text=%E2%8F%B8%E2%8F%BA&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper: oklch(1 0 0);
+    --ink: oklch(0.17 0.012 110);
+    --olive: oklch(0.35 0.075 110);
+    --olive-deep: oklch(0.28 0.06 110);
+    --signal: oklch(0.6 0.19 35);
+    --signal-deep: oklch(0.52 0.17 35);
+    --muted: oklch(0.45 0.05 110);
+    --hair: oklch(0.35 0.075 110 / 0.28);
+    --display: "Familjen Grotesk", system-ui, sans-serif;
+    --body: "Wix Madefor Text", system-ui, sans-serif;
+    --mono: "Fragment Mono", ui-monospace, monospace;
+  }
+  *{ margin:0; box-sizing:border-box; }
+  body{
+    background:var(--paper); color:var(--ink);
+    font-family:var(--body); line-height:1.55;
+    min-height:100svh; display:flex; flex-direction:column;
+    padding: clamp(1.25rem, 4vw, 3rem);
+  }
+  a{ color:inherit; }
+  :focus-visible{ outline:2px solid var(--signal); outline-offset:2px; }
+
+  header.top{
+    display:flex; justify-content:space-between; align-items:baseline;
+    margin-bottom: clamp(2.5rem, 8vh, 6rem);
+  }
+  .wordmark{ font-weight:800; font-size:1.125rem; text-decoration:none; }
+  header.top nav a{ font-size:0.9375rem; color:var(--muted); }
+
+  main{
+    width:min(100%, 44rem); margin:0 auto;
+    display:flex; flex-direction:column; gap: clamp(1.75rem, 4vh, 2.5rem);
+  }
+  h1{
+    font-family:var(--display); font-weight:640;
+    font-size: clamp(1.9rem, 4.5vw, 2.9rem);
+    line-height:1.08; letter-spacing:-0.015em; text-wrap:balance;
+  }
+  h1 .verdict{ color:var(--olive); display:block; }
+
+  figure.exhibit{ border:1px solid var(--hair); }
+  figure.exhibit figcaption{
+    display:flex; justify-content:space-between; gap:1rem;
+    font-family:var(--mono); font-size:0.6875rem; color:var(--muted);
+    padding:0.5rem 1rem; border-bottom:1px solid var(--hair);
+  }
+  .t{
+    font-family:var(--mono); font-size:0.875rem; line-height:1.9;
+    padding:1.25rem 1rem 1.4rem; overflow-x:auto;
+  }
+  .t .ln{ display:block; white-space:pre-wrap; }
+  .t .you::before{ content:"$ "; color:var(--signal-deep); }
+  .t .prompt::before{ content:"> "; color:var(--signal-deep); }
+  .t .agent::before{ content:"⏺ "; color:var(--olive); font-family:"Noto Sans Symbols 2", var(--mono); }
+  .t .ok::before{ content:"✓ "; color:var(--olive); }
+  .t .gate{ color:var(--signal-deep); }
+  .t .gate::before{ content:"⏸ "; color:var(--signal-deep); font-family:"Noto Sans Symbols 2", var(--mono); }
+  .t .dim{ color:var(--muted); }
+
+  .cta{ display:flex; align-items:center; gap:1.5rem; flex-wrap:wrap; }
+  button.copy{
+    font-family:var(--body); font-weight:700; font-size:0.9375rem;
+    background:var(--olive); color:var(--paper);
+    border:0; padding:1rem 1.5rem; cursor:pointer;
+    transition: background-color 140ms ease-out;
+  }
+  button.copy:hover{ background:var(--olive-deep); }
+  button.copy.done{ background:var(--signal); }
+  .quiet{ font-size:0.9375rem; color:var(--muted); }
+
+  footer{
+    margin-top:auto; padding-top:3rem; text-align:center;
+    font-size:0.875rem; color:var(--muted);
+  }
+  @media (max-width:640px){
+    button.copy{ width:100%; }
+  }
+</style>
+</head>
+<body>
+  <header class="top">
+    <a class="wordmark" href="./">site-craft</a>
+    <nav><a href="https://github.com/adrianleb/site-craft-skill">GitHub</a></nav>
+  </header>
+
+  <main>
+    <h1>The agent brings options and screenshots.
+      <span class="verdict">You bring verdicts.</span></h1>
+
+    <figure class="exhibit">
+      <figcaption><span>transcript</span><span>this site, being built, 2026-07-13</span></figcaption>
+      <div class="t" translate="no">
+        <span class="ln you">npx skills add adrianleb/site-craft-skill</span>
+        <span class="ln ok">site-craft installed</span>
+        <span class="ln dim">&nbsp;</span>
+        <span class="ln prompt">/site-craft — the marketing site for site-craft itself</span>
+        <span class="ln agent">Phase 0 · brief confirmed: foundry kin, dry voice, install-command hero</span>
+        <span class="ln agent">Phase 2 · four divergent comps built, screenshot-verified at 1440 and 390</span>
+        <span class="ln gate">waiting on the art director — that’s you</span>
+      </div>
+    </figure>
+
+    <p>site-craft is a phased, user-gated workflow skill: written brief, divergent comps, a
+    type audition, four quality gates, ship prep. It hard-stops at every taste decision.
+    This page is its output, not its promise.</p>
+
+    <div class="cta">
+      <button class="copy" type="button" data-cmd="npx skills add adrianleb/site-craft-skill">Copy the install command</button>
+      <a class="quiet" href="#workflow">read the workflow ↓</a>
+    </div>
+  </main>
+
+  <footer>Extracted from a real build, not a template.</footer>
+
+<script>
+  document.querySelector('.copy').addEventListener('click', async (e) => {
+    const b = e.currentTarget;
+    try { await navigator.clipboard.writeText(b.dataset.cmd); }
+    catch { const t=document.createElement('textarea'); t.value=b.dataset.cmd; document.body.append(t); t.select(); document.execCommand('copy'); t.remove(); }
+    b.textContent = 'Copied ✓'; b.classList.add('done');
+    setTimeout(() => { b.textContent = 'Copy the install command'; b.classList.remove('done'); }, 2000);
+  });
+</script>
+</body>
+</html>
