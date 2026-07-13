@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>site-craft — press v4 · process color</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=Fragment+Mono&family=Wix+Madefor+Text:wght@400..800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper: oklch(1 0 0);
+    --k: oklch(0.2 0 0);                 /* key ink */
+    --c: oklch(0.7 0.13 215);            /* process cyan */
+    --m: oklch(0.62 0.23 350);           /* process magenta */
+    --y: oklch(0.87 0.16 92);            /* process yellow */
+    --muted: oklch(0.45 0 0);            /* K at 60% — honest gray in a process world */
+    --hair: oklch(0.2 0 0 / 0.22);
+    --display:"Archivo",system-ui,sans-serif;
+    --body:"Wix Madefor Text",system-ui,sans-serif;
+    --mono:"Fragment Mono",ui-monospace,monospace;
+  }
+  *{ margin:0; box-sizing:border-box; }
+  body{
+    background:var(--paper); color:var(--k);
+    font-family:var(--body); line-height:1.55;
+    min-height:100svh; display:flex; flex-direction:column;
+    padding: clamp(1.25rem, 4vw, 3.5rem);
+  }
+  a{ color:inherit; }
+  :focus-visible{ outline:2px solid var(--m); outline-offset:2px; }
+
+  .slug{
+    display:flex; justify-content:space-between; gap:1rem; flex-wrap:wrap;
+    font-family:var(--mono); font-size:0.8125rem; color:var(--muted);
+    border-bottom:1px solid var(--hair); padding-bottom:0.75rem;
+    margin-bottom: clamp(2rem, 6vh, 4rem);
+  }
+  .slug b{ color:var(--k); font-weight:400; }
+
+  .job{
+    display:grid; grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);
+    gap: clamp(2rem, 5vw, 4.5rem); align-items:start;
+    max-width:76rem;
+  }
+  .head h1{
+    position:relative;
+    font-family:var(--display);
+    font-variation-settings:"wdth" 116; font-weight:870;
+    font-size: clamp(2.9rem, 7vw, 5.6rem);
+    line-height:0.95; letter-spacing:-0.025em;
+    text-transform:uppercase;
+  }
+  /* chromatic misregistration: C and M plates barely off */
+  .head h1 .reg{ position:relative; z-index:2; }
+  .head h1 .plateC, .head h1 .plateM{
+    position:absolute; inset:0; z-index:1; user-select:none; pointer-events:none;
+  }
+  .head h1 .plateC{ color:var(--c); transform:translate(-1.5px, 1px); }
+  .head h1 .plateM{ color:var(--m); transform:translate(1.5px, -1px); }
+  .head p{ margin-top:1.5rem; max-width:52ch; font-size:1.125rem; }
+  .head p .who{ color:var(--muted); }
+
+  table.ticket{
+    border-collapse:collapse; width:100%;
+    font-family:var(--mono); font-size:0.8125rem;
+  }
+  table.ticket caption{
+    text-align:left; font-family:var(--mono); font-size:0.6875rem;
+    color:var(--muted); padding-bottom:0.5rem; letter-spacing:0.04em;
+  }
+  table.ticket td{
+    border-top:1px solid var(--hair); padding:0.55rem 0; vertical-align:top;
+  }
+  table.ticket td:first-child{ color:var(--muted); width:7.5rem; padding-right:1rem; }
+  table.ticket tr:last-child td{ border-bottom:1px solid var(--hair); }
+  table.ticket .ok{ color:oklch(0.5 0.19 350); }
+
+  .approve{ margin-top: clamp(2rem, 5vh, 3rem); display:grid; gap:1.25rem; max-width:56rem; }
+  .cmdrow{ display:flex; align-items:stretch; flex-wrap:wrap; border:1px solid var(--k); }
+  .cmd{
+    font-family:var(--mono); font-size:1rem;
+    padding:1rem 1.25rem; flex:1 1 auto; min-width:0; align-self:center;
+    overflow-wrap:anywhere;
+  }
+  .cmd .dollar{ color:oklch(0.5 0.19 350); }
+  button.copy{
+    font-family:var(--body); font-weight:700; font-size:0.9375rem;
+    background:var(--k); color:var(--paper);
+    border:0; padding:1rem 1.5rem; cursor:pointer;
+    transition: background-color 140ms ease-out;
+  }
+  button.copy:hover{ background:oklch(0.32 0 0); }
+  button.copy.done{ background:oklch(0.5 0.19 350); }
+  .sig{ display:flex; align-items:baseline; gap:0.9rem; flex-wrap:wrap; color:var(--muted); font-size:0.9375rem; }
+  .pausei{ display:inline-block; width:11px; height:13px; border-left:4px solid var(--m); border-right:4px solid var(--m); transform:translateY(1px); }
+  .sig .line{ flex:1 1 12rem; border-bottom:1px solid var(--k); min-height:1.4em; }
+
+  .colorbar{
+    margin-top:auto; padding-top: clamp(2rem, 6vh, 3rem);
+  }
+  .chips{ display:flex; }
+  .chips i{ flex:1 1 0; height:26px; display:block; }
+  .under{
+    display:flex; justify-content:space-between; gap:1.5rem; flex-wrap:wrap;
+    font-family:var(--mono); font-size:0.8125rem; color:var(--muted);
+    padding-top:0.75rem;
+  }
+  .under .reg-mark{ position:relative; width:18px; height:18px; display:inline-block; vertical-align:-4px; }
+  .under .reg-mark::before, .under .reg-mark::after{ content:""; position:absolute; background:var(--k); }
+  .under .reg-mark::before{ left:50%; top:0; width:1px; height:100%; }
+  .under .reg-mark::after{ top:50%; left:0; height:1px; width:100%; }
+  .under .reg-mark i{ position:absolute; inset:3px; border:1px solid var(--k); border-radius:50%; }
+  .phases b{ font-weight:400; color:var(--k); }
+
+  @media (max-width:860px){
+    .job{ grid-template-columns:1fr; }
+    button.copy{ width:100%; }
+  }
+</style>
+</head>
+<body>
+  <header class="slug">
+    <span><b>site-craft</b> · marketing-site workflow for AI agents</span>
+    <span>four-color job · CMYK · <a href="https://github.com/adrianleb/site-craft-skill">github</a></span>
+  </header>
+
+  <main>
+    <div class="job">
+      <div class="head">
+        <h1>
+          <span class="plateC" aria-hidden="true">Nothing ships unseen.</span>
+          <span class="plateM" aria-hidden="true">Nothing ships unseen.</span>
+          <span class="reg">Nothing ships unseen.</span>
+        </h1>
+        <p>A phased, user-gated workflow that makes an AI coding agent design like a small
+        studio — a written brief before pixels, divergent comps, a screenshot loop so it sees
+        what it builds, four gates before “done”. <span class="who">Extracted from a real
+        build, not a template.</span></p>
+      </div>
+
+      <table class="ticket">
+        <caption>JOB TICKET</caption>
+        <tr><td>job</td><td>the marketing site for site-craft itself</td></tr>
+        <tr><td>client</td><td>adrianleb — the art director</td></tr>
+        <tr><td>spec</td><td>single static page · zero external requests · WCAG 2.2 AA, measured</td></tr>
+        <tr><td>process</td><td>brief → comps → type audition → build → 4 gates → ship</td></tr>
+        <tr><td>pass</td><td>1.5 · direction approved, execution in review</td></tr>
+        <tr><td>status</td><td class="ok">waiting on signature</td></tr>
+      </table>
+    </div>
+
+    <section class="approve" aria-label="install">
+      <div class="cmdrow">
+        <code class="cmd" translate="no"><span class="dollar">$</span> npx skills add adrianleb/site-craft-skill</code>
+        <button class="copy" type="button" data-cmd="npx skills add adrianleb/site-craft-skill">Copy</button>
+      </div>
+      <p class="sig"><span class="pausei" aria-hidden="true"></span> every taste decision waits for a signature — yours. <span class="line" aria-hidden="true"></span></p>
+    </section>
+  </main>
+
+  <footer class="colorbar">
+    <div class="chips" aria-hidden="true">
+      <i style="background:var(--c)"></i><i style="background:oklch(0.7 0.13 215 / 0.5)"></i>
+      <i style="background:var(--m)"></i><i style="background:oklch(0.62 0.23 350 / 0.5)"></i>
+      <i style="background:var(--y)"></i><i style="background:oklch(0.87 0.16 92 / 0.5)"></i>
+      <i style="background:var(--k)"></i><i style="background:oklch(0.2 0 0 / 0.6)"></i>
+      <i style="background:oklch(0.2 0 0 / 0.3)"></i><i style="background:#fff;border:1px solid var(--hair)"></i>
+    </div>
+    <div class="under">
+      <span><span class="reg-mark" aria-hidden="true"><i></i></span>&nbsp; registration ok · contrast measured, not asserted</span>
+      <p class="phases"><b>0</b> brief · <b>1</b> encode · <b>2</b> explore · <b>3</b> build · <b>4</b> gates · <b>5</b> ship</p>
+    </div>
+  </footer>
+
+<script>
+  document.querySelector('.copy').addEventListener('click', async (e) => {
+    const b = e.currentTarget;
+    try { await navigator.clipboard.writeText(b.dataset.cmd); }
+    catch { const t=document.createElement('textarea'); t.value=b.dataset.cmd; document.body.append(t); t.select(); document.execCommand('copy'); t.remove(); }
+    b.textContent = 'Copied'; b.classList.add('done');
+    setTimeout(() => { b.textContent='Copy'; b.classList.remove('done'); }, 2000);
+  });
+</script>
+</body>
+</html>

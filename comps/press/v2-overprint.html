@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>site-craft — press v2 · red-black overprint</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=Fragment+Mono&family=Wix+Madefor+Text:wght@400..800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper: oklch(1 0 0);
+    --ink: oklch(0.2 0.005 60);           /* press black */
+    --red: oklch(0.55 0.21 29);           /* printing red, second ink */
+    --red-deep: oklch(0.48 0.19 29);
+    --muted: oklch(0.44 0.06 29);         /* diluted red-black ink */
+    --hair: oklch(0.2 0.005 60 / 0.25);
+    --display:"Archivo",system-ui,sans-serif;
+    --body:"Wix Madefor Text",system-ui,sans-serif;
+    --mono:"Fragment Mono",ui-monospace,monospace;
+  }
+  *{ margin:0; box-sizing:border-box; }
+  body{
+    background:var(--paper); color:var(--ink);
+    font-family:var(--body); line-height:1.55;
+    min-height:100svh;
+    padding: clamp(1.25rem, 4vw, 3.5rem);
+    display:flex; flex-direction:column;
+  }
+  a{ color:inherit; }
+  :focus-visible{ outline:2px solid var(--red); outline-offset:2px; }
+
+  .slug{
+    display:flex; justify-content:space-between; gap:1rem; flex-wrap:wrap;
+    font-family:var(--mono); font-size:0.8125rem; color:var(--muted);
+    border-bottom:1px solid var(--hair); padding-bottom:0.75rem;
+    margin-bottom: clamp(2.5rem, 7vh, 5rem);
+  }
+  .slug b{ color:var(--ink); font-weight:400; }
+
+  .press{ position:relative; max-width:72rem; }
+  h1{
+    font-family:var(--display);
+    font-variation-settings:"wdth" 116; font-weight:870;
+    font-size: clamp(3rem, 8.2vw, 6rem);
+    line-height:0.94; letter-spacing:-0.025em;
+    text-transform:uppercase; max-width:11ch;
+  }
+  /* the second ink: a giant pause mark, overprinted */
+  .pausemark{
+    position:absolute; top:-12%; left:31%;
+    width: clamp(9rem, 23vw, 18rem); height: clamp(11rem, 30vw, 23rem);
+    transform: rotate(-7deg);
+    mix-blend-mode: multiply;
+    display:flex; justify-content:space-between;
+    pointer-events:none;
+  }
+  .pausemark i{ display:block; width:38%; background:var(--red); }
+
+  .sub{
+    margin-top: clamp(1.75rem, 4vh, 2.5rem); max-width:56ch; font-size:1.125rem;
+    position:relative; z-index:1;
+  }
+  .sub .who{ color:var(--muted); }
+
+  .approve{ margin-top: clamp(2rem, 5vh, 3rem); display:grid; gap:1.25rem; max-width:56rem; }
+  .cmdrow{ display:flex; align-items:stretch; flex-wrap:wrap; border:1px solid var(--ink); }
+  .cmd{
+    font-family:var(--mono); font-size:1rem;
+    padding:1rem 1.25rem; flex:1 1 auto; min-width:0; align-self:center;
+    overflow-wrap:anywhere;
+  }
+  .cmd .dollar{ color:var(--red); }
+  button.copy{
+    font-family:var(--body); font-weight:700; font-size:0.9375rem;
+    background:var(--red); color:var(--paper);
+    border:0; padding:1rem 1.5rem; cursor:pointer;
+    transition: background-color 140ms ease-out;
+  }
+  button.copy:hover{ background:var(--red-deep); }
+  button.copy.done{ background:var(--ink); }
+  .sig{ display:flex; align-items:baseline; gap:0.9rem; flex-wrap:wrap; color:var(--muted); font-size:0.9375rem; }
+  .pausei{ display:inline-block; width:11px; height:13px; border-left:4px solid var(--red); border-right:4px solid var(--red); transform:translateY(1px); }
+  .sig .line{ flex:1 1 12rem; border-bottom:1px solid var(--ink); min-height:1.4em; }
+
+  .ticket{
+    margin-top:auto; padding-top: clamp(2rem, 6vh, 3rem);
+    display:flex; justify-content:space-between; align-items:flex-end; gap:1.5rem; flex-wrap:wrap;
+  }
+  .swatches{ display:flex; align-items:flex-end; }
+  .swatches .k, .swatches .r{ width:30px; height:18px; display:inline-block; }
+  .swatches .k{ background:var(--ink); }
+  .swatches .r{ background:var(--red); margin-left:-12px; mix-blend-mode:multiply; }
+  .swatches .label{ font-family:var(--mono); font-size:0.6875rem; color:var(--muted); margin-left:0.75rem; }
+  .phases{ font-family:var(--mono); font-size:0.8125rem; color:var(--muted); border-top:1px solid var(--hair); padding-top:0.75rem; }
+  .phases b{ font-weight:400; color:var(--red-deep); }
+
+  @media (max-width:720px){
+    .pausemark{ top:-3%; left:auto; right:-8%; width:8.5rem; height:15rem; }
+    button.copy{ width:100%; }
+  }
+</style>
+</head>
+<body>
+  <header class="slug">
+    <span><b>site-craft</b> · marketing-site workflow for AI agents</span>
+    <span>two-ink job · black + red · <a href="https://github.com/adrianleb/site-craft-skill">github</a></span>
+  </header>
+
+  <main class="press">
+    <div class="pausemark" aria-hidden="true"><i></i><i></i></div>
+    <h1>Nothing ships unseen.</h1>
+    <p class="sub">A phased, user-gated workflow that makes an AI coding agent design like a
+    small studio — a written brief before pixels, divergent comps, a screenshot loop so it
+    sees what it builds, four gates before “done”. The red mark is the product: <b>it stops
+    and waits for you.</b> <span class="who">Extracted from a real build, not a template.</span></p>
+
+    <section class="approve" aria-label="install">
+      <div class="cmdrow">
+        <code class="cmd" translate="no"><span class="dollar">$</span> npx skills add adrianleb/site-craft-skill</code>
+        <button class="copy" type="button" data-cmd="npx skills add adrianleb/site-craft-skill">Copy</button>
+      </div>
+      <p class="sig"><span class="pausei" aria-hidden="true"></span> every taste decision waits for a signature — yours. <span class="line" aria-hidden="true"></span></p>
+    </section>
+  </main>
+
+  <footer class="ticket">
+    <div class="swatches" aria-hidden="true">
+      <span class="k"></span><span class="r"></span>
+      <span class="label">K + red, overprint</span>
+    </div>
+    <p class="phases"><b>0</b> brief · <b>1</b> encode · <b>2</b> explore · <b>3</b> build · <b>4</b> gates · <b>5</b> ship</p>
+  </footer>
+
+<script>
+  document.querySelector('.copy').addEventListener('click', async (e) => {
+    const b = e.currentTarget;
+    try { await navigator.clipboard.writeText(b.dataset.cmd); }
+    catch { const t=document.createElement('textarea'); t.value=b.dataset.cmd; document.body.append(t); t.select(); document.execCommand('copy'); t.remove(); }
+    b.textContent = 'Copied'; b.classList.add('done');
+    setTimeout(() => { b.textContent='Copy'; b.classList.remove('done'); }, 2000);
+  });
+</script>
+</body>
+</html>
