@@ -1,0 +1,272 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>site-craft — type audition · 6 voices × 5 lines</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo:wdth,wght@62..125,100..900&family=Big+Shoulders+Stencil:opsz,wght@10..72,100..900&family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,200..800&family=Ultra&family=Young+Serif&family=Fragment+Mono&family=Wix+Madefor+Text:wght@400..800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper: oklch(1 0 0);
+    --ink: oklch(0.2 0.005 60);
+    --red: oklch(0.55 0.21 29);
+    --red-deep: oklch(0.48 0.19 29);
+    --muted: oklch(0.44 0.06 29);
+    --hair: oklch(0.2 0.005 60 / 0.25);
+    --body:"Wix Madefor Text",system-ui,sans-serif;
+    --mono:"Fragment Mono",ui-monospace,monospace;
+  }
+  *{ margin:0; box-sizing:border-box; }
+  body{
+    background:var(--paper); color:var(--ink);
+    font-family:var(--body); line-height:1.55;
+    min-height:100svh;
+    padding: clamp(1.25rem, 4vw, 3.5rem);
+    padding-bottom: 9.5rem;
+    display:flex; flex-direction:column;
+  }
+  a{ color:inherit; }
+  :focus-visible{ outline:2px solid var(--red); outline-offset:2px; }
+
+  .slug{
+    display:flex; justify-content:space-between; gap:1rem; flex-wrap:wrap;
+    font-family:var(--mono); font-size:0.8125rem; color:var(--muted);
+    border-bottom:1px solid var(--hair); padding-bottom:0.75rem;
+    margin-bottom: clamp(2.5rem, 7vh, 5rem);
+  }
+  .slug b{ color:var(--ink); font-weight:400; }
+
+  .press{ max-width:72rem; }
+  .hgroup{ position:relative; }
+  h1{
+    font-variation-settings: var(--h1-fvs, normal);
+    max-width:11ch; letter-spacing:var(--h1-ls, -0.02em);
+    text-wrap:balance;
+  }
+  .markwrap{
+    position:absolute; top:-14%; left:31%;
+    width: clamp(9rem, 23vw, 18rem); height:126%;
+    pointer-events:none; mix-blend-mode:multiply;
+  }
+  .pausemark{
+    width:100%; height:100%;
+    transform: rotate(-7deg);
+    display:flex; justify-content:space-between;
+    animation: drift 7s ease-in-out infinite alternate;
+  }
+  @keyframes drift{
+    from{ transform: rotate(-7.6deg) translateY(-8px); }
+    to{   transform: rotate(-6.1deg) translateY(10px); }
+  }
+  @media (prefers-reduced-motion: reduce){
+    .pausemark{ animation:none; }
+  }
+  .pausemark i{ display:block; width:38%; background:var(--red); }
+
+  .sub{
+    margin-top: clamp(1.75rem, 4vh, 2.5rem); max-width:56ch; font-size:1.125rem;
+    position:relative; z-index:1;
+  }
+  .sub .who{ color:var(--muted); }
+  .sub .lead{ font-weight:700; }
+  .sub .lead:empty{ display:none; }
+
+  .approve{ margin-top: clamp(2rem, 5vh, 3rem); display:grid; gap:1.25rem; max-width:56rem; }
+  .cmdrow{ display:flex; align-items:stretch; flex-wrap:wrap; border:1px solid var(--ink); }
+  .cmd{
+    font-family:var(--mono); font-size:1rem;
+    padding:1rem 1.25rem; flex:1 1 auto; min-width:0; align-self:center;
+    overflow-wrap:anywhere;
+  }
+  .cmd .dollar{ color:var(--red); }
+  button.copy{
+    font-family:var(--body); font-weight:700; font-size:0.9375rem;
+    background:var(--red); color:var(--paper);
+    border:0; padding:1rem 1.5rem; cursor:pointer;
+    transition: background-color 140ms ease-out;
+  }
+  button.copy:hover{ background:var(--red-deep); }
+  button.copy.done{ background:var(--ink); }
+  .sig{ display:flex; align-items:baseline; gap:0.9rem; flex-wrap:wrap; color:var(--muted); font-size:0.9375rem; }
+  .pausei{ display:inline-block; width:11px; height:13px; border-left:4px solid var(--red); border-right:4px solid var(--red); transform:translateY(1px); }
+  .sig .line{ flex:1 1 12rem; border-bottom:1px solid var(--ink); min-height:1.4em; }
+
+  .ticket{
+    margin-top:auto; padding-top: clamp(2rem, 6vh, 3rem);
+    display:flex; justify-content:space-between; align-items:flex-end; gap:1.5rem; flex-wrap:wrap;
+  }
+  .swatches{ display:flex; align-items:flex-end; }
+  .swatches .k, .swatches .r{ width:30px; height:18px; display:inline-block; }
+  .swatches .k{ background:var(--ink); }
+  .swatches .r{ background:var(--red); margin-left:-12px; mix-blend-mode:multiply; }
+  .swatches .label{ font-family:var(--mono); font-size:0.6875rem; color:var(--muted); margin-left:0.75rem; }
+  .phases{ font-family:var(--mono); font-size:0.8125rem; color:var(--muted); border-top:1px solid var(--hair); padding-top:0.75rem; }
+  .phases b{ font-weight:400; color:var(--red-deep); }
+
+  /* ---- audition toolbar (not part of the comp) ---- */
+  .booth{
+    position:fixed; left:0; right:0; bottom:0; z-index:10;
+    background:var(--paper); border-top:1px solid var(--ink);
+    padding:0.65rem clamp(1rem, 3vw, 2rem) 0.8rem;
+    display:grid; gap:0.5rem;
+    font-size:0.875rem;
+  }
+  .booth .rowb{ display:flex; align-items:center; gap:0.5rem; flex-wrap:wrap; }
+  .booth .lbl{ font-family:var(--mono); font-size:0.6875rem; color:var(--muted); width:3.5rem; }
+  .booth button{
+    border:1px solid var(--ink); background:var(--paper); color:var(--ink);
+    padding:0.3rem 0.65rem; cursor:pointer; font-size:0.8125rem;
+    transition: background-color 120ms ease-out, color 120ms ease-out;
+  }
+  .booth button:hover{ border-color:var(--red); color:var(--red-deep); }
+  .booth button[aria-pressed="true"]{ background:var(--red); border-color:var(--red); color:var(--paper); }
+  .booth .hint{ font-family:var(--mono); font-size:0.6875rem; color:var(--muted); margin-left:auto; }
+  @media (max-width:720px){
+    body{ padding-bottom:12rem; }
+    .booth .hint{ display:none; }
+    button.copy{ width:100%; }
+  }
+</style>
+</head>
+<body>
+  <header class="slug">
+    <span><b>site-craft</b> · marketing-site workflow for AI agents</span>
+    <span>type audition · 6 voices × 5 lines · <a href="https://github.com/adrianleb/site-craft-skill">github</a></span>
+  </header>
+
+  <main class="press">
+    <div class="hgroup">
+      <div class="markwrap" aria-hidden="true"><div class="pausemark"><i></i><i></i></div></div>
+      <h1 id="h1">From zero to hero.</h1>
+    </div>
+    <p class="sub"><span class="lead" id="lead"></span> A phased, user-gated workflow that makes
+    an AI coding agent design like a small studio — a written brief before pixels, divergent
+    comps, a screenshot loop so it sees what it builds, four gates before “done”.
+    <span class="who">Extracted from a real build, not a template.</span></p>
+
+    <section class="approve" aria-label="install">
+      <div class="cmdrow">
+        <code class="cmd" translate="no"><span class="dollar">$</span> npx skills add adrianleb/site-craft-skill</code>
+        <button class="copy" type="button" data-cmd="npx skills add adrianleb/site-craft-skill">Copy</button>
+      </div>
+      <p class="sig"><span class="pausei" aria-hidden="true"></span> every taste decision waits for a signature — yours. <span class="line" aria-hidden="true"></span></p>
+    </section>
+  </main>
+
+  <footer class="ticket">
+    <div class="swatches" aria-hidden="true">
+      <span class="k"></span><span class="r"></span>
+      <span class="label">K + red, overprint</span>
+    </div>
+    <p class="phases"><b>0</b> brief · <b>1</b> encode · <b>2</b> explore · <b>3</b> build · <b>4</b> gates · <b>5</b> ship</p>
+  </footer>
+
+  <nav class="booth" aria-label="audition controls">
+    <div class="rowb" id="faceRow"><span class="lbl">voice</span></div>
+    <div class="rowb" id="headRow"><span class="lbl">line</span>
+      <span class="hint">←/→ voice · ↑/↓ line</span></div>
+  </nav>
+
+<script>
+const FACES = [
+  {id:'archivo',  label:'Archivo',      fam:'"Archivo"',              up:true,  size:'clamp(3rem, 8.2vw, 6rem)',   lh:0.94, ls:'-0.025em', wght:870, fvs:'"wdth" 116'},
+  {id:'anton',    label:'Anton',        fam:'"Anton"',                up:true,  size:'clamp(3.2rem, 8.6vw, 6rem)', lh:0.96, ls:'-0.005em', wght:400, fvs:'normal'},
+  {id:'bricolage',label:'Bricolage',    fam:'"Bricolage Grotesque"',  up:false, size:'clamp(2.9rem, 7.4vw, 5.5rem)',lh:0.97, ls:'-0.03em', wght:800, fvs:'"opsz" 96, "wdth" 87'},
+  {id:'young',    label:'Young Serif',  fam:'"Young Serif"',          up:false, size:'clamp(2.7rem, 6.8vw, 5rem)', lh:1.02, ls:'-0.015em', wght:400, fvs:'normal'},
+  {id:'ultra',    label:'Ultra',        fam:'"Ultra"',                up:false, size:'clamp(2.5rem, 6.4vw, 4.7rem)',lh:1.04, ls:'0.002em',  wght:400, fvs:'normal'},
+  {id:'stencil',  label:'Stencil',      fam:'"Big Shoulders Stencil"',up:true,  size:'clamp(3.2rem, 8.6vw, 6rem)', lh:0.96, ls:'0.015em',  wght:800, fvs:'"opsz" 72'},
+];
+const HEADS = [
+  {id:'zero',     h:'From zero to hero.',       lead:'It starts at Phase 0 — a written brief — and earns the hero from there.'},
+  {id:'slop',     h:'Slop stops here.',         lead:'Your agent’s next site doesn’t have to look like its last one.'},
+  {id:'unseen',   h:'Nothing ships unseen.',    lead:''},
+  {id:'median',   h:'The median is the enemy.', lead:'One-shot generation converges on the category average; this workflow never one-shots.'},
+  {id:'approved', h:'Approved, then shipped.',  lead:'Every pixel passes a press check before it goes anywhere.'},
+];
+const h1 = document.getElementById('h1'), lead = document.getElementById('lead');
+let face = 'archivo', head = 'zero';
+
+function applyFace(){
+  const f = FACES.find(x=>x.id===face);
+  h1.style.fontFamily = f.fam + ', sans-serif';
+  h1.style.fontSize = f.size;
+  h1.style.lineHeight = f.lh;
+  h1.style.fontWeight = f.wght;
+  h1.style.setProperty('--h1-ls', f.ls);
+  h1.style.setProperty('--h1-fvs', f.fvs);
+  h1.style.textTransform = f.up ? 'uppercase' : 'none';
+  document.querySelectorAll('[data-face-btn]').forEach(b =>
+    b.setAttribute('aria-pressed', String(b.dataset.faceBtn===face)));
+}
+function applyHead(){
+  const hd = HEADS.find(x=>x.id===head);
+  h1.textContent = hd.h;
+  lead.textContent = hd.lead;
+  document.querySelectorAll('[data-head-btn]').forEach(b =>
+    b.setAttribute('aria-pressed', String(b.dataset.headBtn===head)));
+}
+function sync(){
+  applyFace(); applyHead();
+  history.replaceState(null,'', '#f='+face+'&h='+head);
+}
+
+const faceRow = document.getElementById('faceRow'), headRow = document.getElementById('headRow');
+FACES.forEach(f=>{
+  const b = document.createElement('button');
+  b.type='button'; b.dataset.faceBtn=f.id; b.textContent=f.label;
+  b.style.fontFamily=f.fam+', sans-serif';
+  if(f.fvs!=='normal') b.style.fontVariationSettings=f.fvs;
+  b.addEventListener('click', ()=>{ face=f.id; sync(); });
+  faceRow.appendChild(b);
+});
+HEADS.forEach(hd=>{
+  const b = document.createElement('button');
+  b.type='button'; b.dataset.headBtn=hd.id; b.textContent=hd.h;
+  b.addEventListener('click', ()=>{ head=hd.id; sync(); });
+  headRow.insertBefore(b, headRow.querySelector('.hint'));
+});
+
+addEventListener('keydown', e=>{
+  if(e.target.tagName==='INPUT'||e.target.tagName==='TEXTAREA') return;
+  const fi = FACES.findIndex(x=>x.id===face), hi = HEADS.findIndex(x=>x.id===head);
+  if(e.key==='ArrowRight'){ face = FACES[(fi+1)%FACES.length].id; sync(); e.preventDefault(); }
+  if(e.key==='ArrowLeft'){ face = FACES[(fi-1+FACES.length)%FACES.length].id; sync(); e.preventDefault(); }
+  if(e.key==='ArrowDown'){ head = HEADS[(hi+1)%HEADS.length].id; sync(); e.preventDefault(); }
+  if(e.key==='ArrowUp'){ head = HEADS[(hi-1+HEADS.length)%HEADS.length].id; sync(); e.preventDefault(); }
+});
+
+// hash restore
+const m = location.hash.match(/f=([a-z]+)&h=([a-z]+)/);
+if(m && FACES.some(f=>f.id===m[1])) face = m[1];
+if(m && HEADS.some(h=>h.id===m[2])) head = m[2];
+sync();
+
+// mark: pointer parallax (the "little awwwards fun", pass 1)
+const wrap = document.querySelector('.markwrap');
+if(!matchMedia('(prefers-reduced-motion: reduce)').matches){
+  let tx=0, ty=0, cx=0, cy=0, raf=null;
+  addEventListener('pointermove', e=>{
+    tx = (e.clientX/innerWidth - 0.5) * -22;
+    ty = (e.clientY/innerHeight - 0.5) * -14;
+    if(!raf) raf = requestAnimationFrame(step);
+  });
+  function step(){
+    cx += (tx-cx)*0.07; cy += (ty-cy)*0.07;
+    wrap.style.transform = 'translate('+cx.toFixed(2)+'px,'+cy.toFixed(2)+'px)';
+    raf = (Math.abs(tx-cx)>0.05 || Math.abs(ty-cy)>0.05) ? requestAnimationFrame(step) : null;
+  }
+}
+
+// copy
+document.querySelector('.copy').addEventListener('click', async (e) => {
+  const b = e.currentTarget;
+  try { await navigator.clipboard.writeText(b.dataset.cmd); }
+  catch { const t=document.createElement('textarea'); t.value=b.dataset.cmd; document.body.append(t); t.select(); document.execCommand('copy'); t.remove(); }
+  b.textContent = 'Copied'; b.classList.add('done');
+  setTimeout(() => { b.textContent='Copy'; b.classList.remove('done'); }, 2000);
+});
+</script>
+</body>
+</html>
