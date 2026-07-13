@@ -1,0 +1,484 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>site-craft — a marketing-site workflow for AI coding agents</title>
+<meta name="description" content="A phased, user-gated workflow skill that makes an AI coding agent design like a small studio: written brief, divergent comps, a type audition, four quality gates, ship prep. You are the art director.">
+<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#ffffff">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Fragment+Mono&family=Wix+Madefor+Text:wght@400..800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper: oklch(1 0 0);
+    --ink: oklch(0.2 0.005 60);
+    --red: oklch(0.55 0.21 29);
+    --red-deep: oklch(0.48 0.19 29);
+    --muted: oklch(0.44 0.06 29);
+    --hair: oklch(0.2 0.005 60 / 0.25);
+    --display:"Anton",system-ui,sans-serif;
+    --body:"Wix Madefor Text",system-ui,sans-serif;
+    --mono:"Fragment Mono",ui-monospace,monospace;
+    --pad: clamp(1.25rem, 4vw, 3.5rem);
+  }
+  *{ margin:0; box-sizing:border-box; }
+  html{ scroll-behavior:smooth; }
+  @media (prefers-reduced-motion: reduce){ html{ scroll-behavior:auto; } }
+  body{
+    background:var(--paper); color:var(--ink);
+    font-family:var(--body); line-height:1.55;
+    padding:0 var(--pad);
+  }
+  a{ color:inherit; text-decoration-color:var(--red); text-decoration-thickness:1.5px; text-underline-offset:3px; }
+  a:hover{ color:var(--red-deep); }
+  :focus-visible{ outline:2px solid var(--red); outline-offset:2px; }
+  .skip{
+    position:absolute; left:-9999px; top:0.5rem; z-index:99;
+    background:var(--ink); color:var(--paper); padding:0.5rem 1rem; font-size:0.9375rem;
+  }
+  .skip:focus{ left:0.5rem; }
+
+  /* ---------- slug ---------- */
+  .slug{
+    display:flex; justify-content:space-between; gap:1rem; flex-wrap:wrap;
+    font-family:var(--mono); font-size:0.8125rem; color:var(--muted);
+    border-bottom:1px solid var(--hair);
+    padding:1.1rem 0 0.75rem;
+  }
+  .slug b{ color:var(--ink); font-weight:400; }
+  .slug nav{ display:flex; gap:1.25rem; }
+
+  /* ---------- hero (the approved comp, verbatim) ---------- */
+  .hero{ padding-top: clamp(2.5rem, 7vh, 5rem); max-width:72rem; }
+  .stampzone{ position:relative; cursor:crosshair; overflow:hidden; padding-bottom:2px; }
+  h1{
+    font-family:var(--display); font-weight:400;
+    font-size: clamp(3.2rem, 8.6vw, 6rem);
+    line-height:0.96; letter-spacing:-0.005em;
+    text-transform:uppercase; max-width:11ch; text-wrap:balance;
+  }
+  .sub{ margin-top: clamp(1.75rem, 4vh, 2.5rem); max-width:56ch; font-size:1.125rem; }
+  .sub .lead{ font-weight:700; }
+  .sub .who{ color:var(--muted); }
+
+  .stamp{
+    position:absolute; mix-blend-mode:multiply; pointer-events:none;
+    border:3px solid var(--red); color:var(--red);
+    padding:0.5rem 0.9rem 0.55rem; text-align:center; background:transparent;
+    transform: rotate(var(--rot,-8deg)) scale(var(--sc,1));
+  }
+  .stamp::before{ content:""; position:absolute; inset:3px; border:1.5px solid var(--red); }
+  .stamp .big{ font-family:var(--display); font-size:2.4rem; line-height:1; letter-spacing:0.02em; display:block; text-transform:uppercase; }
+  .stamp .small{ font-family:var(--mono); font-size:0.6rem; letter-spacing:0.08em; display:block; margin-top:0.3rem; color:var(--red-deep); }
+  @keyframes slam{
+    0%{ transform: rotate(var(--rot,-8deg)) scale(2.3); opacity:0; }
+    55%{ transform: rotate(var(--rot,-8deg)) scale(0.94); opacity:1; }
+    100%{ transform: rotate(var(--rot,-8deg)) scale(var(--sc,1)); opacity:1; }
+  }
+  .stamp.slam{ animation: slam 340ms cubic-bezier(.16,1,.3,1) both; }
+  @media (prefers-reduced-motion: reduce){ .stamp.slam{ animation:none; } }
+
+  .approve{ margin-top: clamp(2rem, 5vh, 3rem); display:grid; gap:1.25rem; max-width:56rem; }
+  .cmdrow{ display:flex; align-items:stretch; flex-wrap:wrap; border:1px solid var(--ink); }
+  .cmd{ font-family:var(--mono); font-size:1rem; padding:1rem 1.25rem; flex:1 1 auto; min-width:0; align-self:center; overflow-wrap:anywhere; }
+  .cmd .dollar{ color:var(--red); }
+  button.copy{
+    font-family:var(--body); font-weight:700; font-size:0.9375rem;
+    background:var(--red); color:var(--paper); border:0; padding:1rem 1.5rem; cursor:pointer;
+    transition: background-color 140ms ease-out;
+  }
+  button.copy:hover{ background:var(--red-deep); }
+  button.copy.done{ background:var(--ink); }
+  .sig{ display:flex; align-items:baseline; gap:0.9rem; flex-wrap:wrap; color:var(--muted); font-size:0.9375rem; }
+  .pausei{ display:inline-block; width:11px; height:13px; border-left:4px solid var(--red); border-right:4px solid var(--red); transform:translateY(1px); }
+  .sig .line{ flex:1 1 12rem; border-bottom:1px solid var(--ink); min-height:1.4em; }
+
+  .ticket{
+    display:flex; justify-content:space-between; align-items:flex-end; gap:1.5rem; flex-wrap:wrap;
+    padding: clamp(2.5rem, 7vh, 4.5rem) 0 0;
+  }
+  .swatches{ display:flex; align-items:flex-end; }
+  .swatches .k, .swatches .r{ width:30px; height:18px; display:inline-block; }
+  .swatches .k{ background:var(--ink); }
+  .swatches .r{ background:var(--red); margin-left:-12px; mix-blend-mode:multiply; }
+  .swatches .label{ font-family:var(--mono); font-size:0.6875rem; color:var(--muted); margin-left:0.75rem; }
+  .phases-line{ font-family:var(--mono); font-size:0.8125rem; color:var(--muted); }
+  .phases-line b{ font-weight:400; color:var(--red-deep); }
+
+  /* ---------- sections ---------- */
+  section.block{
+    border-top:1px solid var(--hair);
+    margin-top: clamp(4rem, 10vh, 7rem);
+    padding-top: clamp(2.5rem, 6vh, 4rem);
+    max-width:72rem;
+  }
+  h2{
+    font-family:var(--display); font-weight:400;
+    font-size: clamp(2rem, 4.6vw, 3.4rem);
+    line-height:0.98; letter-spacing:0;
+    text-transform:uppercase; max-width:18ch; text-wrap:balance;
+  }
+  .blocklede{ margin-top:1.25rem; max-width:56ch; font-size:1.125rem; }
+  .blocklede .who{ color:var(--muted); }
+
+  /* failures */
+  dl.failures{ margin-top: clamp(2rem, 5vh, 3rem); display:grid; grid-template-columns:1fr 1fr; gap: clamp(1.75rem, 4vh, 2.5rem) clamp(2rem, 5vw, 5rem); }
+  dl.failures > div{ max-width:44ch; }
+  dl.failures dt{ font-weight:700; font-size:1.1875rem; line-height:1.3; }
+  dl.failures dd{ margin:0.4rem 0 0; color:var(--ink); }
+  dl.failures dd::before{ content:"⌃ fixed: "; color:var(--red-deep); font-weight:700; }
+
+  /* phases */
+  ol.phases{ list-style:none; padding:0; margin: clamp(2rem, 5vh, 3rem) 0 0; }
+  ol.phases li{
+    display:grid; grid-template-columns: 3.4rem minmax(0,1.15fr) minmax(0,0.85fr);
+    gap:1rem 1.5rem; align-items:baseline;
+    border-top:1px solid var(--hair); padding:1.1rem 0;
+  }
+  ol.phases li:last-child{ border-bottom:1px solid var(--hair); }
+  .pnum{ font-family:var(--display); font-size:2rem; line-height:1; color:var(--red); }
+  .pname b{ font-weight:700; }
+  .pname .pdesc{ display:block; color:var(--ink); margin-top:0.15rem; font-size:0.9375rem; }
+  .pyou{ font-family:var(--mono); font-size:0.8125rem; color:var(--red-deep); }
+  .pyou::before{
+    content:""; display:inline-block; width:9px; height:11px; margin-right:0.5rem;
+    background:linear-gradient(90deg, var(--red-deep) 0 34%, transparent 34% 66%, var(--red-deep) 66% 100%);
+  }
+  .phasenote{ margin-top:1.25rem; font-size:0.9375rem; color:var(--muted); max-width:56ch; }
+
+  /* paper trail */
+  .wall{
+    display:grid; grid-template-columns:1.1fr 0.95fr 1.05fr; gap: clamp(1rem, 2vw, 1.75rem);
+    align-items:start; margin-top: clamp(2rem, 5vh, 3rem);
+  }
+  .doc{
+    border:1px solid var(--hair); background:var(--paper);
+    padding:1.1rem 1.2rem 1.3rem; font-size:0.875rem; line-height:1.5;
+    transform:rotate(var(--tilt, 0deg));
+  }
+  .doc .dochead{
+    display:flex; justify-content:space-between; margin-bottom:0.75rem;
+    font-family:var(--mono); font-size:0.6875rem; color:var(--muted);
+    border-bottom:1px solid var(--hair); padding-bottom:0.5rem;
+  }
+  .doc h3{ font-family:var(--body); font-weight:700; font-size:1.05rem; line-height:1.25; margin-bottom:0.5rem; }
+  .doc ul{ padding-left:1.1rem; margin:0.25rem 0 0; }
+  .doc .quote{ color:var(--red-deep); font-weight:700; }
+  .doc.term{ font-family:var(--mono); font-size:0.75rem; line-height:1.7; }
+  .doc.term .sha{ color:var(--red-deep); }
+  .walllinks{ margin-top:1.5rem; font-size:0.9375rem; color:var(--muted); max-width:none; }
+
+  /* divergence counts */
+  .counts{
+    margin-top: clamp(2rem, 5vh, 2.75rem);
+    font-family:var(--mono); font-size:clamp(1rem, 2.6vw, 1.5rem); color:var(--ink);
+    display:flex; flex-wrap:wrap; gap:0.4rem 1.1rem; align-items:baseline;
+  }
+  .counts b{ font-family:var(--display); font-weight:400; font-size:1.6em; color:var(--red); letter-spacing:0.01em; }
+  .counts .arr{ color:var(--muted); }
+  .countnote{ margin-top:1rem; font-size:0.9375rem; color:var(--muted); max-width:56ch; }
+
+  /* gates */
+  ul.gates{ list-style:none; padding:0; margin: clamp(2rem, 5vh, 3rem) 0 0; }
+  ul.gates li{
+    display:grid; grid-template-columns:minmax(0,0.9fr) minmax(0,1.4fr);
+    gap:0.5rem 2rem; border-top:1px solid var(--hair); padding:1rem 0; align-items:baseline;
+  }
+  ul.gates li:last-child{ border-bottom:1px solid var(--hair); }
+  .gname{ font-family:var(--mono); font-size:0.9375rem; }
+  .gname::before{ content:"[" counter(gate) "/4] "; color:var(--red-deep); }
+  ul.gates{ counter-reset: gate; }
+  ul.gates li{ counter-increment: gate; }
+  .gdoes{ font-size:0.9375rem; }
+  .gatenote{ margin-top:1.25rem; font-size:0.9375rem; color:var(--muted); max-width:56ch; }
+
+  /* close */
+  .close-h{
+    font-family:var(--display); font-weight:400; text-transform:uppercase;
+    font-size: clamp(2rem, 4.6vw, 3.4rem); line-height:0.98; max-width:18ch; text-wrap:balance;
+  }
+  .close-links{ margin-top:1.5rem; display:flex; gap:1.75rem; flex-wrap:wrap; font-size:0.9375rem; }
+
+  /* colophon */
+  footer.colophon{
+    border-top:1px solid var(--ink);
+    margin-top: clamp(4rem, 10vh, 7rem);
+    padding:1rem 0 1.6rem;
+    display:flex; justify-content:space-between; gap:1rem 2rem; flex-wrap:wrap;
+    font-family:var(--mono); font-size:0.75rem; color:var(--muted);
+  }
+  footer.colophon .fine{ max-width:60ch; }
+
+  @media (max-width:860px){
+    dl.failures{ grid-template-columns:1fr; }
+    .wall{ grid-template-columns:1fr; }
+    .doc{ --tilt:0deg !important; }
+    ol.phases li{ grid-template-columns:2.6rem minmax(0,1fr); }
+    .pyou{ grid-column:2; }
+    ul.gates li{ grid-template-columns:1fr; }
+    button.copy{ width:100%; }
+    .stamp .big{ font-size:1.7rem; }
+  }
+</style>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+
+  <header class="slug">
+    <span><b>site-craft</b> · marketing-site workflow for AI agents</span>
+    <nav aria-label="site">
+      <a href="#workflow">the workflow</a>
+      <a href="https://github.com/adrianleb/site-craft-skill">GitHub</a>
+    </nav>
+  </header>
+
+  <main id="main">
+    <!-- HERO — the approved comp -->
+    <section class="hero" aria-label="site-craft">
+      <div class="stampzone" id="zone">
+        <h1>Approved, then shipped.</h1>
+        <p class="sub"><span class="lead">Every pixel passes a press check before it goes anywhere.</span>
+        site-craft is a phased, user-gated workflow that makes an AI coding agent design like a
+        small studio — a written brief before pixels, divergent comps, a screenshot loop so it
+        sees what it builds, four gates before “done”. <span class="who">Extracted from a real
+        build, not a template.</span></p>
+      </div>
+
+      <div class="approve">
+        <div class="cmdrow">
+          <code class="cmd" translate="no"><span class="dollar">$</span> npx skills add adrianleb/site-craft-skill</code>
+          <button class="copy" type="button" data-cmd="npx skills add adrianleb/site-craft-skill">Copy</button>
+        </div>
+        <p class="sig"><span class="pausei" aria-hidden="true"></span> every taste decision waits for a signature — yours. <span class="line" aria-hidden="true"></span></p>
+      </div>
+
+      <div class="ticket">
+        <div class="swatches" aria-hidden="true">
+          <span class="k"></span><span class="r"></span>
+          <span class="label">K + red, overprint</span>
+        </div>
+        <p class="phases-line"><b>0</b> brief · <b>1</b> encode · <b>2</b> explore · <b>3</b> build · <b>4</b> gates · <b>5</b> ship</p>
+      </div>
+    </section>
+
+    <!-- THE ARGUMENT -->
+    <section class="block" aria-labelledby="h-fail">
+      <h2 id="h-fail">AI-built marketing sites fail in predictable ways.</h2>
+      <p class="blocklede">You’ve seen it. You may have shipped it. None of it is a model
+      problem — all of it is a process problem, and each failure has a named fix.</p>
+      <dl class="failures">
+        <div>
+          <dt>The model designs blind — it never looks at what it rendered.</dt>
+          <dd>a screenshot loop. Every artifact is rendered at 1440 and 390, reviewed by the
+          agent itself, and repaired before you ever see it.</dd>
+        </div>
+        <div>
+          <dt>Taste evaporates between sessions.</dt>
+          <dd>a written brief. Your decisions land in PRODUCT.md and DESIGN.md — versioned,
+          quotable, enforced on every later edit.</dd>
+        </div>
+        <div>
+          <dt>One-shot generation converges to the category’s median.</dt>
+          <dd>divergent comps, a type audition, a device audition. Commitment only after
+          comparison, never on the first draw.</dd>
+        </div>
+        <div>
+          <dt>“Done” gets declared without anything being verified.</dt>
+          <dd>four quality gates measured on the rendered DOM, then ship prep with a checklist —
+          fonts self-hosted, zero external requests, a real 404.</dd>
+        </div>
+      </dl>
+    </section>
+
+    <!-- THE PHASES -->
+    <section class="block" id="workflow" aria-labelledby="h-phases">
+      <h2 id="h-phases">From zero to hero.</h2>
+      <p class="blocklede">Six phases, numbered 0 through 5 the way the job actually runs. The
+      agent does the work; the pen stays in your hand at every
+      <span class="pausei" aria-hidden="true" style="border-color:var(--red)"></span> checkpoint.</p>
+      <ol class="phases">
+        <li>
+          <span class="pnum" aria-hidden="true">0</span>
+          <span class="pname"><b>Brief.</b><span class="pdesc">Product truth crawled from your repo and docs; one focused interview; direction played back in plain sentences.</span></span>
+          <span class="pyou">you confirm the direction</span>
+        </li>
+        <li>
+          <span class="pnum" aria-hidden="true">1</span>
+          <span class="pname"><b>Encode.</b><span class="pdesc">The brief becomes PRODUCT.md and a DESIGN.md seed — positioning, personality, anti-references, judgment calls marked for veto.</span></span>
+          <span class="pyou">you veto the judgment calls</span>
+        </li>
+        <li>
+          <span class="pnum" aria-hidden="true">2</span>
+          <span class="pname"><b>Explore.</b><span class="pdesc">Three to four genuinely different hero comps, then a ~6-voice type audition on the winner — live, switchable, screenshot-verified.</span></span>
+          <span class="pyou">you pick; grafts welcome</span>
+        </li>
+        <li>
+          <span class="pnum" aria-hidden="true">3</span>
+          <span class="pname"><b>Build.</b><span class="pdesc">DESIGN.md graduates to locked tokens; the full page is built in the winning voice; every interactive behavior is exercised in the live DOM.</span></span>
+          <span class="pyou">your copy edits are sacred</span>
+        </li>
+        <li>
+          <span class="pnum" aria-hidden="true">4</span>
+          <span class="pname"><b>Gates.</b><span class="pdesc">Four audits with fixes applied — accessibility and UX compliance, a scored technical audit, micro-interactions, a copy review.</span></span>
+          <span class="pyou">you review the reports</span>
+        </li>
+        <li>
+          <span class="pnum" aria-hidden="true">5</span>
+          <span class="pname"><b>Ship prep.</b><span class="pdesc">Self-hosted subset fonts, zero external requests, favicon, regenerable og-image, a 404 in the same voice, and a deployment checklist for your host.</span></span>
+          <span class="pyou">you ship it</span>
+        </li>
+      </ol>
+      <p class="phasenote">Deployment itself is deliberately out of scope — it’s infra-specific.
+      The skill ends by handing you a checklist adapted to where the site actually lives.</p>
+    </section>
+
+    <!-- THE LOOP + PAPER TRAIL -->
+    <section class="block" aria-labelledby="h-unseen">
+      <h2 id="h-unseen">Nothing ships unseen.</h2>
+      <p class="blocklede">The iron rule: <b>screenshot everything you build, before showing
+      it.</b> The agent renders desktop and mobile, looks at its own output, and fixes what’s
+      broken first. The process also leaves a paper trail — these are this site’s real working
+      files, today.</p>
+      <div class="wall">
+        <article class="doc" style="--tilt:-0.8deg">
+          <div class="dochead"><span>DESIGN.md</span><span>locked</span></div>
+          <h3>Two inks and paper.</h3>
+          <ul>
+            <li>Paper is white, never cream.</li>
+            <li>Red is worked, not decorative.</li>
+            <li>Overprint is the blend.</li>
+            <li>No third hue, ever.</li>
+          </ul>
+        </article>
+        <article class="doc" style="--tilt:0.6deg">
+          <div class="dochead"><span>FRICTION.md</span><span>F1–F12</span></div>
+          <h3>The run logs its own rough edges.</h3>
+          <p>Twelve findings filed against the skill while it built this page — ambiguities,
+          missing instructions, tool mismatches. <span class="quote">Logged, not hidden.</span></p>
+        </article>
+        <article class="doc term" style="--tilt:1deg">
+          <div class="dochead"><span>git log</span><span>branch: site</span></div>
+          <p><span class="sha">a92c04f</span> device audition — pause bars retired<br>
+          <span class="sha">f6bbd1b</span> type audition — 6 voices × 5 lines<br>
+          <span class="sha">d635caa</span> press-check pushed — olive vetoed<br>
+          <span class="sha">56bcf79</span> four divergent hero comps</p>
+        </article>
+      </div>
+      <p class="walllinks">The comps that lost are public:
+      <a href="comps/">round 1</a> · <a href="comps/press/">round 1.5</a> ·
+      <a href="comps/audition/">the type audition</a> · <a href="comps/device/">the device audition</a>.</p>
+    </section>
+
+    <!-- DIVERGENCE -->
+    <section class="block" aria-labelledby="h-median">
+      <h2 id="h-median">The median is the enemy.</h2>
+      <p class="blocklede">One comp is a guess wearing a suit. site-craft never bets the brand
+      on a single draw — it diverges first and commits late, at your checkpoints, on the record.</p>
+      <p class="counts" aria-label="what this page's own hero survived">
+        <span><b>4</b> directions</span><span class="arr">→</span>
+        <span><b>4</b> color worlds</span><span class="arr">→</span>
+        <span><b>6</b> voices</span><span class="arr">×</span>
+        <span><b>5</b> lines</span><span class="arr">→</span>
+        <span><b>4</b> devices</span><span class="arr">→</span>
+        <span><b>1</b> hero</span>
+      </p>
+      <p class="countnote">That’s what this page’s own hero survived. An olive palette, five
+      headlines, and a floating pause mark did not make it. Their funerals are in the git history.</p>
+    </section>
+
+    <!-- GATES -->
+    <section class="block" aria-labelledby="h-gates">
+      <h2 id="h-gates">Slop stops here.</h2>
+      <p class="blocklede">Before “done” may be said out loud, the page passes four audits —
+      findings fixed, not filed away.</p>
+      <ul class="gates">
+        <li><span class="gname">web-design-guidelines</span>
+            <span class="gdoes">accessibility and UX compliance: skip links, focus, live regions, touch targets, the details everyone skips.</span></li>
+        <li><span class="gname">impeccable audit</span>
+            <span class="gdoes">scored technical audit — contrast ratios computed from the rendered DOM, not asserted from the stylesheet.</span></li>
+        <li><span class="gname">make-interfaces-feel-better</span>
+            <span class="gdoes">micro-interactions: interruptible transitions, named properties only, hit areas that forgive.</span></li>
+        <li><span class="gname">writing-guidelines</span>
+            <span class="gdoes">copy review — run after your edits land, because your edits are the copy.</span></li>
+      </ul>
+      <p class="gatenote">Where a gate’s generic rule fights this design system, the system wins —
+      recorded as overridden, never silently skipped.</p>
+    </section>
+
+    <!-- CLOSE -->
+    <section class="block" aria-labelledby="h-close">
+      <h2 class="close-h" id="h-close">You are the art director.</h2>
+      <p class="blocklede">The agent brings options and screenshots; you bring verdicts. Install
+      it, open your repo, and say what you’re making.</p>
+      <div class="approve">
+        <div class="cmdrow">
+          <code class="cmd" translate="no"><span class="dollar">$</span> npx skills add adrianleb/site-craft-skill</code>
+          <button class="copy" type="button" data-cmd="npx skills add adrianleb/site-craft-skill">Copy</button>
+        </div>
+      </div>
+      <div class="close-links">
+        <a href="https://github.com/adrianleb/site-craft-skill">GitHub</a>
+        <a href="https://github.com/adrianleb/site-craft-skill/blob/master/SKILL.md">read SKILL.md</a>
+        <a href="https://github.com/adrianleb/site-craft-skill/blob/master/FRICTION.md">the friction log</a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="colophon">
+    <span class="fine">Set in Anton, Wix Madefor Text and Fragment Mono · two inks on white
+    paper · built by site-craft running itself, checkpoint by checkpoint. No testimonials were
+    invented in the making of this site.</span>
+    <span translate="no">JOB Nº 001 · PASS 02 · 2026-07-13</span>
+  </footer>
+
+<script>
+  // the stamp — hero device (approved at round 2.5)
+  const zone = document.getElementById('zone');
+  let pass = 1;
+  const dateStr = '2026-07-13';
+  function addStamp(x, y, rot, sc, animate = true){
+    const s = document.createElement('div');
+    s.className = 'stamp' + (animate ? ' slam' : '');
+    s.style.setProperty('--rot', rot + 'deg');
+    s.style.setProperty('--sc', sc);
+    s.setAttribute('aria-hidden', 'true');
+    s.innerHTML = '<span class="big">Approved</span><span class="small">PASS Nº ' +
+      String(pass).padStart(2,'0') + ' · ' + dateStr + '</span>';
+    zone.appendChild(s);
+    requestAnimationFrame(() => {
+      s.style.left = (x - s.offsetWidth/2) + 'px';
+      s.style.top  = (y - s.offsetHeight/2) + 'px';
+    });
+    pass++;
+    const all = zone.querySelectorAll('.stamp');
+    if (all.length > 12) all[0].remove();
+  }
+  addEventListener('load', () => {
+    const h1 = zone.querySelector('h1');
+    setTimeout(() => addStamp(h1.offsetWidth*0.62, h1.offsetHeight*0.72, -9, 1), 450);
+  });
+  zone.addEventListener('click', e => {
+    const r = zone.getBoundingClientRect();
+    addStamp(e.clientX - r.left, e.clientY - r.top, -14 + Math.sin(pass*3.7)*10, 0.85 + (pass%3)*0.11);
+  });
+  addEventListener('keydown', e => {
+    if (e.key.toLowerCase() === 's' && e.target === document.body){
+      addStamp(60 + (pass*97)%(zone.offsetWidth-180), 30 + (pass*61)%(zone.offsetHeight-90), -14 + Math.sin(pass*3.7)*10, 0.9);
+    }
+  });
+
+  // copy buttons (hero + close)
+  document.querySelectorAll('button.copy').forEach(btn => {
+    btn.addEventListener('click', async (e) => {
+      const b = e.currentTarget;
+      try { await navigator.clipboard.writeText(b.dataset.cmd); }
+      catch { const t=document.createElement('textarea'); t.value=b.dataset.cmd; document.body.append(t); t.select(); document.execCommand('copy'); t.remove(); }
+      b.textContent = 'Copied'; b.classList.add('done');
+      setTimeout(() => { b.textContent='Copy'; b.classList.remove('done'); }, 2000);
+    });
+  });
+</script>
+</body>
+</html>
