@@ -90,8 +90,14 @@
   .slug nav{ display:flex; gap:1.25rem; }
 
   /* ---------- hero (the approved comp, verbatim) ---------- */
-  .hero{ padding-top: clamp(2.5rem, 7vh, 5rem); max-width:72rem; }
-  .stampzone{ position:relative; cursor:crosshair; overflow:hidden; padding-bottom:2px; }
+  .hero{ padding-top: clamp(2.5rem, 7vh, 5rem); }
+  .stampzone{
+    position:relative; cursor:crosshair; overflow:hidden;
+    /* full-bleed hit area: cancel the body pad, repad the content, so the
+       zone spans the exact viewport width without 100vw scrollbar overflow */
+    margin:0 calc(-1 * var(--pad));
+    padding:0 var(--pad) 2px;
+  }
   h1{
     font-family:var(--display); font-weight:400;
     font-size: clamp(3.2rem, 8.6vw, 6rem);
@@ -103,7 +109,7 @@
   .sub .who{ color:var(--muted); }
 
   .stamp{
-    position:absolute; mix-blend-mode:multiply; pointer-events:none;
+    position:absolute; z-index:1; pointer-events:none; white-space:nowrap;
     border:3px solid var(--red); color:var(--red);
     padding:0.5rem 0.9rem 0.55rem; text-align:center; background:transparent;
     transform: rotate(var(--rot,-8deg)) scale(var(--sc,1));
@@ -138,6 +144,7 @@
   .ticket{
     display:flex; justify-content:space-between; align-items:flex-end; gap:1.5rem; flex-wrap:wrap;
     padding: clamp(2.5rem, 7vh, 4.5rem) 0 0;
+    max-width:72rem;
   }
   .swatches{ display:flex; align-items:flex-end; }
   .swatches .k, .swatches .r{ width:30px; height:18px; display:inline-block; }
@@ -503,7 +510,7 @@
   }
   addEventListener('load', () => {
     const h1 = zone.querySelector('h1');
-    setTimeout(() => addStamp(h1.offsetWidth*0.62, h1.offsetHeight*0.72, -9, 1), 450);
+    setTimeout(() => addStamp(h1.offsetLeft + h1.offsetWidth*0.62, h1.offsetTop + h1.offsetHeight*0.72, -9, 1), 450);
   });
   zone.addEventListener('click', e => {
     const r = zone.getBoundingClientRect();
