@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>site-craft — a marketing-site workflow for AI coding agents</title>
+<title>site-craft: a marketing-site workflow for AI coding agents</title>
 <meta name="description" content="A phased, user-gated workflow skill that makes an AI coding agent design like a small studio: written brief, divergent comps, a type audition, four quality gates, ship prep. You are the art director.">
 <meta name="color-scheme" content="light">
 <meta name="theme-color" content="#ffffff">
@@ -30,10 +30,22 @@
     background:var(--paper); color:var(--ink);
     font-family:var(--body); line-height:1.55;
     padding:0 var(--pad);
+    -webkit-font-smoothing:antialiased;
   }
+  p, dd{ text-wrap:pretty; }
+  code{ font-family:var(--mono); font-size:0.925em; }
+  html{ -webkit-tap-highlight-color:transparent; }
   a{ color:inherit; text-decoration-color:var(--red); text-decoration-thickness:1.5px; text-underline-offset:3px; }
   a:hover{ color:var(--red-deep); }
+  a, button, .stampzone{ touch-action:manipulation; }
+  .slug nav a, .close-links a{ padding:0.7rem 0.15rem; margin:-0.7rem -0.15rem; }
+  .walllinks a{ padding:0.45rem 0.15rem; margin:-0.45rem -0.15rem; }
   :focus-visible{ outline:2px solid var(--red); outline-offset:2px; }
+  [id]{ scroll-margin-top:1rem; }
+  .sr-only{
+    position:absolute; width:1px; height:1px; padding:0; margin:-1px;
+    overflow:hidden; clip-path:inset(50%); white-space:nowrap; border:0;
+  }
   .skip{
     position:absolute; left:-9999px; top:0.5rem; z-index:99;
     background:var(--ink); color:var(--paper); padding:0.5rem 1rem; font-size:0.9375rem;
@@ -87,9 +99,10 @@
   button.copy{
     font-family:var(--body); font-weight:700; font-size:0.9375rem;
     background:var(--red); color:var(--paper); border:0; padding:1rem 1.5rem; cursor:pointer;
-    transition: background-color 140ms ease-out;
+    transition: background-color 140ms ease-out, transform 140ms ease-out;
   }
-  button.copy:hover{ background:var(--red-deep); }
+  button.copy:hover, button.copy:active{ background:var(--red-deep); }
+  button.copy:active{ transform:scale(0.96); }
   button.copy.done{ background:var(--ink); }
   .sig{ display:flex; align-items:baseline; gap:0.9rem; flex-wrap:wrap; color:var(--muted); font-size:0.9375rem; }
   .pausei{ display:inline-block; width:11px; height:13px; border-left:4px solid var(--red); border-right:4px solid var(--red); transform:translateY(1px); }
@@ -126,7 +139,7 @@
   /* failures */
   dl.failures{ margin-top: clamp(2rem, 5vh, 3rem); display:grid; grid-template-columns:1fr 1fr; gap: clamp(1.75rem, 4vh, 2.5rem) clamp(2rem, 5vw, 5rem); }
   dl.failures > div{ max-width:44ch; }
-  dl.failures dt{ font-weight:700; font-size:1.1875rem; line-height:1.3; }
+  dl.failures dt{ font-weight:700; font-size:1.1875rem; line-height:1.3; text-wrap:balance; }
   dl.failures dd{ margin:0.4rem 0 0; color:var(--ink); }
   dl.failures dd::before{ content:"⌃ fixed: "; color:var(--red-deep); font-weight:700; }
 
@@ -163,7 +176,7 @@
     font-family:var(--mono); font-size:0.6875rem; color:var(--muted);
     border-bottom:1px solid var(--hair); padding-bottom:0.5rem;
   }
-  .doc h3{ font-family:var(--body); font-weight:700; font-size:1.05rem; line-height:1.25; margin-bottom:0.5rem; }
+  .doc h3{ font-family:var(--body); font-weight:700; font-size:1.05rem; line-height:1.25; margin-bottom:0.5rem; text-wrap:balance; }
   .doc ul{ padding-left:1.1rem; margin:0.25rem 0 0; }
   .doc .quote{ color:var(--red-deep); font-weight:700; }
   .doc.term{ font-family:var(--mono); font-size:0.75rem; line-height:1.7; }
@@ -225,6 +238,7 @@
 </head>
 <body>
   <a class="skip" href="#main">Skip to content</a>
+  <span class="sr-only" role="status" id="copystatus"></span>
 
   <header class="slug">
     <span><b>site-craft</b> · marketing-site workflow for AI agents</span>
@@ -241,7 +255,7 @@
         <h1>Approved, then shipped.</h1>
         <p class="sub"><span class="lead">Every pixel passes a press check before it goes anywhere.</span>
         site-craft is a phased, user-gated workflow that makes an AI coding agent design like a
-        small studio — a written brief before pixels, divergent comps, a screenshot loop so it
+        small studio: a written brief before pixels, divergent comps, a screenshot loop so it
         sees what it builds, four gates before “done”. <span class="who">Extracted from a real
         build, not a template.</span></p>
       </div>
@@ -251,7 +265,7 @@
           <code class="cmd" translate="no"><span class="dollar">$</span> npx skills add adrianleb/site-craft-skill</code>
           <button class="copy" type="button" data-cmd="npx skills add adrianleb/site-craft-skill">Copy</button>
         </div>
-        <p class="sig"><span class="pausei" aria-hidden="true"></span> every taste decision waits for a signature — yours. <span class="line" aria-hidden="true"></span></p>
+        <p class="sig"><span class="pausei" aria-hidden="true"></span> Every taste decision waits for a signature: yours. <span class="line" aria-hidden="true"></span></p>
       </div>
 
       <div class="ticket">
@@ -267,26 +281,26 @@
     <section class="block" aria-labelledby="h-fail">
       <h2 id="h-fail">AI-built marketing sites fail in predictable ways.</h2>
       <p class="blocklede">You’ve seen it. You may have shipped it. None of it is a model
-      problem — all of it is a process problem, and each failure has a named fix.</p>
+      problem; all of it is a process problem, and each failure has a named fix.</p>
       <dl class="failures">
         <div>
-          <dt>The model designs blind — it never looks at what it rendered.</dt>
-          <dd>a screenshot loop. Every artifact is rendered at 1440 and 390, reviewed by the
-          agent itself, and repaired before you ever see it.</dd>
+          <dt>The model designs blind: it never looks at what it rendered.</dt>
+          <dd>a screenshot loop. The agent renders every artifact at 1440 and 390, reviews
+          its own screenshots, and repairs what’s wrong before you ever see it.</dd>
         </div>
         <div>
           <dt>Taste evaporates between sessions.</dt>
-          <dd>a written brief. Your decisions land in PRODUCT.md and DESIGN.md — versioned,
-          quotable, enforced on every later edit.</dd>
+          <dd>a written brief. <code translate="no">PRODUCT.md</code> and <code translate="no">DESIGN.md</code> keep
+          your decisions: versioned, quotable, enforced on every later edit.</dd>
         </div>
         <div>
           <dt>One-shot generation converges to the category’s median.</dt>
           <dd>divergent comps, a type audition, a device audition. Commitment only after
-          comparison, never on the first draw.</dd>
+          comparison.</dd>
         </div>
         <div>
-          <dt>“Done” gets declared without anything being verified.</dt>
-          <dd>four quality gates measured on the rendered DOM, then ship prep with a checklist —
+          <dt>The model declares “done” without verifying anything.</dt>
+          <dd>four quality gates that measure the rendered DOM, then ship prep with a checklist:
           fonts self-hosted, zero external requests, a real 404.</dd>
         </div>
       </dl>
@@ -306,22 +320,22 @@
         </li>
         <li>
           <span class="pnum" aria-hidden="true">1</span>
-          <span class="pname"><b>Encode.</b><span class="pdesc">The brief becomes PRODUCT.md and a DESIGN.md seed — positioning, personality, anti-references, judgment calls marked for veto.</span></span>
+          <span class="pname"><b>Encode.</b><span class="pdesc">The brief becomes <code translate="no">PRODUCT.md</code> and a <code translate="no">DESIGN.md</code> seed: positioning, personality, anti-references, judgment calls marked for veto.</span></span>
           <span class="pyou">you veto the judgment calls</span>
         </li>
         <li>
           <span class="pnum" aria-hidden="true">2</span>
-          <span class="pname"><b>Explore.</b><span class="pdesc">Three to four genuinely different hero comps, then a ~6-voice type audition on the winner — live, switchable, screenshot-verified.</span></span>
+          <span class="pname"><b>Explore.</b><span class="pdesc">Three or four divergent hero comps, then a ~6-voice type audition on the winner: live, switchable, screenshot-verified.</span></span>
           <span class="pyou">you pick; grafts welcome</span>
         </li>
         <li>
           <span class="pnum" aria-hidden="true">3</span>
-          <span class="pname"><b>Build.</b><span class="pdesc">DESIGN.md graduates to locked tokens; the full page is built in the winning voice; every interactive behavior is exercised in the live DOM.</span></span>
+          <span class="pname"><b>Build.</b><span class="pdesc"><code translate="no">DESIGN.md</code> graduates to locked tokens; the agent builds the full page in the winning voice and exercises every behavior in the live DOM.</span></span>
           <span class="pyou">your copy edits are sacred</span>
         </li>
         <li>
           <span class="pnum" aria-hidden="true">4</span>
-          <span class="pname"><b>Gates.</b><span class="pdesc">Four audits with fixes applied — accessibility and UX compliance, a scored technical audit, micro-interactions, a copy review.</span></span>
+          <span class="pname"><b>Gates.</b><span class="pdesc">Four audits with fixes applied: accessibility and UX compliance, a scored technical audit, micro-interactions, a copy review.</span></span>
           <span class="pyou">you review the reports</span>
         </li>
         <li>
@@ -330,8 +344,8 @@
           <span class="pyou">you ship it</span>
         </li>
       </ol>
-      <p class="phasenote">Deployment itself is deliberately out of scope — it’s infra-specific.
-      The skill ends by handing you a checklist adapted to where the site actually lives.</p>
+      <p class="phasenote">Deployment itself is deliberately out of scope: it’s infra-specific.
+      The skill ends by handing you a checklist for wherever the site lives.</p>
     </section>
 
     <!-- THE LOOP + PAPER TRAIL -->
@@ -339,7 +353,7 @@
       <h2 id="h-unseen">Nothing ships unseen.</h2>
       <p class="blocklede">The iron rule: <b>screenshot everything you build, before showing
       it.</b> The agent renders desktop and mobile, looks at its own output, and fixes what’s
-      broken first. The process also leaves a paper trail — these are this site’s real working
+      broken first. The process also leaves a paper trail. These are this site’s real working
       files, today.</p>
       <div class="wall">
         <article class="doc" style="--tilt:-0.8deg">
@@ -358,7 +372,7 @@
           <p>The AI-slop landing page. The Tailwind-template SaaS median. The rendered
           README. <span class="quote">Deliberately not on the list: measured expressiveness.</span></p>
         </article>
-        <article class="doc term" style="--tilt:1deg">
+        <article class="doc term" style="--tilt:1deg" translate="no">
           <div class="dochead"><span>git log</span><span>branch: site</span></div>
           <p><span class="sha">a92c04f</span> device audition — pause bars retired<br>
           <span class="sha">f6bbd1b</span> type audition — 6 voices × 5 lines<br>
@@ -374,8 +388,8 @@
     <!-- DIVERGENCE -->
     <section class="block" aria-labelledby="h-median">
       <h2 id="h-median">The median is the enemy.</h2>
-      <p class="blocklede">One comp is a guess wearing a suit. site-craft never bets the brand
-      on a single draw — it diverges first and commits late, at your checkpoints, on the record.</p>
+      <p class="blocklede">One comp is a guess. site-craft never bets the brand on a single
+      draw: it diverges first and commits late, at your checkpoints, on the record.</p>
       <p class="counts" aria-label="what this page's own hero survived">
         <span><b>4</b> directions</span><span class="arr">→</span>
         <span><b>4</b> color worlds</span><span class="arr">→</span>
@@ -391,19 +405,19 @@
     <!-- GATES -->
     <section class="block" aria-labelledby="h-gates">
       <h2 id="h-gates">Slop stops here.</h2>
-      <p class="blocklede">Before “done” may be said out loud, the page passes four audits —
+      <p class="blocklede">Before “done” may be said out loud, the page passes four audits:
       findings fixed, not filed away.</p>
       <ul class="gates">
-        <li><span class="gname">web-design-guidelines</span>
+        <li><span class="gname" translate="no">web-design-guidelines</span>
             <span class="gdoes">accessibility and UX compliance: skip links, focus, live regions, touch targets, the details everyone skips.</span></li>
-        <li><span class="gname">impeccable audit</span>
-            <span class="gdoes">scored technical audit — contrast ratios computed from the rendered DOM, not asserted from the stylesheet.</span></li>
-        <li><span class="gname">make-interfaces-feel-better</span>
+        <li><span class="gname" translate="no">impeccable audit</span>
+            <span class="gdoes">scored technical audit: contrast ratios computed from the rendered DOM, not asserted from the stylesheet.</span></li>
+        <li><span class="gname" translate="no">make-interfaces-feel-better</span>
             <span class="gdoes">micro-interactions: interruptible transitions, named properties only, hit areas that forgive.</span></li>
-        <li><span class="gname">writing-guidelines</span>
-            <span class="gdoes">copy review — run after your edits land, because your edits are the copy.</span></li>
+        <li><span class="gname" translate="no">writing-guidelines</span>
+            <span class="gdoes">copy review: runs after your edits, because your edits are the copy.</span></li>
       </ul>
-      <p class="gatenote">Where a gate’s generic rule fights this design system, the system wins —
+      <p class="gatenote">Where a gate’s generic rule fights this design system, the system wins:
       recorded as overridden, never silently skipped.</p>
     </section>
 
@@ -426,7 +440,7 @@
   </main>
 
   <footer class="colophon">
-    <span class="fine">Set in Anton, Wix Madefor Text and Fragment Mono · two inks on white
+    <span class="fine">Set in Anton, Wix Madefor Text, and Fragment Mono · two inks on white
     paper · built by site-craft running itself, checkpoint by checkpoint. No testimonials were
     invented in the making of this site.</span>
     <span translate="no">JOB Nº 001 · PASS 02 · 2026-07-13</span>
@@ -451,8 +465,14 @@
       s.style.top  = (y - s.offsetHeight/2) + 'px';
     });
     pass++;
-    const all = zone.querySelectorAll('.stamp');
-    if (all.length > 12) all[0].remove();
+    const all = zone.querySelectorAll('.stamp:not([data-out])');
+    if (all.length > 12){
+      const old = all[0];
+      old.dataset.out = '1';
+      old.style.transition = 'opacity 160ms ease-out';
+      old.style.opacity = '0';
+      setTimeout(() => old.remove(), 180);
+    }
   }
   addEventListener('load', () => {
     const h1 = zone.querySelector('h1');
@@ -475,6 +495,8 @@
       try { await navigator.clipboard.writeText(b.dataset.cmd); }
       catch { const t=document.createElement('textarea'); t.value=b.dataset.cmd; document.body.append(t); t.select(); document.execCommand('copy'); t.remove(); }
       b.textContent = 'Copied'; b.classList.add('done');
+      const st = document.getElementById('copystatus');
+      st.textContent = ''; requestAnimationFrame(() => { st.textContent = 'Install command copied to clipboard'; });
       setTimeout(() => { b.textContent='Copy'; b.classList.remove('done'); }, 2000);
     });
   });
