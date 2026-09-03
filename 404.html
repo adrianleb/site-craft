@@ -71,9 +71,13 @@
   .slug nav{ display:flex; gap:1.25rem; }
 
   main{
-    flex:1; position:relative; max-width:72rem; width:100%;
+    flex:1; position:relative;
     padding-top: clamp(2.5rem, 7vh, 5rem);
   }
+  /* the sheet: 72rem column centered on wide screens; the physics field stays full width.
+     width:100% because slug and colophon are flex items of body — with margin-inline:auto
+     alone a flex item shrinks to content width instead of filling to the cap */
+  .slug, .pagein, footer.colophon{ width:100%; max-width:72rem; margin-inline:auto; }
   h1{
     font-family:var(--display); font-weight:400;
     font-size: clamp(3.2rem, 8.6vw, 6rem);
@@ -130,14 +134,16 @@
   </header>
 
   <main id="main">
-    <h1>Never approved.</h1>
-    <p class="sub"><span class="lead">There’s no page at this address.</span>
-    Whatever you were promised never passed a checkpoint: no brief, no comps, no gates,
-    no stamp. <span class="who">Two marks survived. They still move.</span></p>
+    <div class="pagein">
+      <h1>Never approved.</h1>
+      <p class="sub"><span class="lead">There’s no page at this address.</span>
+      Whatever you were promised never passed a checkpoint: no brief, no comps, no gates,
+      no stamp. <span class="who">Two marks survived. They still move.</span></p>
 
-    <div class="approve">
-      <a class="back" href="/site-craft-skill/">Back to the approved page</a>
-      <p class="sig"><span class="pausei" aria-hidden="true"></span> This page waited for a signature that never came. <span class="line" aria-hidden="true"></span></p>
+      <div class="approve">
+        <a class="back" href="/site-craft-skill/">Back to the approved page</a>
+        <p class="sig"><span class="pausei" aria-hidden="true"></span> This page waited for a signature that never came. <span class="line" aria-hidden="true"></span></p>
+      </div>
     </div>
 
     <div class="fieldwrap" id="field" aria-hidden="true">

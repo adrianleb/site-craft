@@ -89,6 +89,11 @@
   .slug b{ color:var(--ink); font-weight:400; }
   .slug nav{ display:flex; gap:1.25rem; }
 
+  /* ---------- the sheet: 72rem column, centered on wide screens, left rail kept ---------- */
+  .slug, .zonein, .approve, .ticket, section.block, footer.colophon{
+    max-width:72rem; margin-inline:auto;
+  }
+
   /* ---------- hero (the approved comp, verbatim) ---------- */
   .hero{ padding-top: clamp(2.5rem, 7vh, 5rem); }
   .stampzone{
@@ -125,7 +130,8 @@
   .stamp.slam{ animation: slam 340ms cubic-bezier(.16,1,.3,1) both; }
   @media (prefers-reduced-motion: reduce){ .stamp.slam{ animation:none; } }
 
-  .approve{ margin-top: clamp(2rem, 5vh, 3rem); display:grid; gap:1.25rem; max-width:56rem; }
+  .approve{ margin-top: clamp(2rem, 5vh, 3rem); display:grid; gap:1.25rem; }
+  .approve > *{ max-width:56rem; }
   .cmdrow{ display:flex; align-items:stretch; flex-wrap:wrap; border:1px solid var(--ink); }
   .cmd{ font-family:var(--mono); font-size:1rem; padding:1rem 1.25rem; flex:1 1 auto; min-width:0; align-self:center; overflow-wrap:anywhere; }
   .cmd .dollar{ color:var(--red); }
@@ -144,7 +150,6 @@
   .ticket{
     display:flex; justify-content:space-between; align-items:flex-end; gap:1.5rem; flex-wrap:wrap;
     padding: clamp(2.5rem, 7vh, 4.5rem) 0 0;
-    max-width:72rem;
   }
   .swatches{ display:flex; align-items:flex-end; }
   .swatches .k, .swatches .r{ width:30px; height:18px; display:inline-block; }
@@ -159,7 +164,6 @@
     border-top:1px solid var(--hair);
     margin-top: clamp(4rem, 10vh, 7rem);
     padding-top: clamp(2.5rem, 6vh, 4rem);
-    max-width:72rem;
   }
   h2{
     font-family:var(--display); font-weight:400;
@@ -286,12 +290,14 @@
     <!-- HERO — the approved comp -->
     <section class="hero" aria-label="site-craft">
       <div class="stampzone" id="zone">
-        <h1>Approved, then shipped.</h1>
-        <p class="sub"><span class="lead">Every pixel passes a press check before it goes anywhere.</span>
-        site-craft is a phased, user-gated workflow that makes an AI coding agent design like a
-        small studio: a written brief before pixels, divergent comps, a screenshot loop so it
-        sees what it builds, four gates before “done”. <span class="who">Extracted from a real
-        build, not a template.</span></p>
+        <div class="zonein">
+          <h1>Approved, then shipped.</h1>
+          <p class="sub"><span class="lead">Every pixel passes a press check before it goes anywhere.</span>
+          site-craft is a phased, user-gated workflow that makes an AI coding agent design like a
+          small studio: a written brief before pixels, divergent comps, a screenshot loop so it
+          sees what it builds, four gates before “done”. <span class="who">Extracted from a real
+          build, not a template.</span></p>
+        </div>
       </div>
 
       <div class="approve">
