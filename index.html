@@ -149,7 +149,7 @@
 
   .ticket{
     display:flex; justify-content:space-between; align-items:flex-end; gap:1.5rem; flex-wrap:wrap;
-    padding: clamp(2.5rem, 7vh, 4.5rem) 0 0;
+    padding: clamp(2rem, 5vh, 3rem) 0 0;
   }
   .swatches{ display:flex; align-items:flex-end; }
   .swatches .k, .swatches .r{ width:30px; height:18px; display:inline-block; }
@@ -162,8 +162,8 @@
   /* ---------- sections ---------- */
   section.block{
     border-top:1px solid var(--hair);
-    margin-top: clamp(4rem, 10vh, 7rem);
-    padding-top: clamp(2.5rem, 6vh, 4rem);
+    margin-top: clamp(3rem, 7vh, 5rem);
+    padding-top: clamp(2rem, 5vh, 3rem);
   }
   h2{
     font-family:var(--display); font-weight:400;
@@ -175,14 +175,14 @@
   .blocklede .who{ color:var(--muted); }
 
   /* failures */
-  dl.failures{ margin-top: clamp(2rem, 5vh, 3rem); display:grid; grid-template-columns:1fr 1fr; gap: clamp(1.75rem, 4vh, 2.5rem) clamp(2rem, 5vw, 5rem); }
+  dl.failures{ margin-top: clamp(1.75rem, 4vh, 2.5rem); display:grid; grid-template-columns:1fr 1fr; gap: clamp(1.75rem, 4vh, 2.5rem) clamp(2rem, 5vw, 5rem); }
   dl.failures > div{ max-width:44ch; }
   dl.failures dt{ font-weight:700; font-size:1.1875rem; line-height:1.3; text-wrap:balance; }
   dl.failures dd{ margin:0.4rem 0 0; color:var(--ink); }
   dl.failures dd::before{ content:"⌃ fixed: "; color:var(--red-deep); font-weight:700; }
 
   /* phases */
-  ol.phases{ list-style:none; padding:0; margin: clamp(2rem, 5vh, 3rem) 0 0; }
+  ol.phases{ list-style:none; padding:0; margin: clamp(1.75rem, 4vh, 2.5rem) 0 0; }
   ol.phases li{
     display:grid; grid-template-columns: 3.4rem minmax(0,1.15fr) minmax(0,0.85fr);
     gap:1rem 1.5rem; align-items:baseline;
@@ -197,12 +197,11 @@
     content:""; display:inline-block; width:9px; height:11px; margin-right:0.5rem;
     background:linear-gradient(90deg, var(--red-deep) 0 34%, transparent 34% 66%, var(--red-deep) 66% 100%);
   }
-  .phasenote{ margin-top:1.25rem; font-size:0.9375rem; color:var(--muted); max-width:56ch; }
 
   /* paper trail */
   .wall{
     display:grid; grid-template-columns:1.1fr 0.95fr 1.05fr; gap: clamp(1rem, 2vw, 1.75rem);
-    align-items:start; margin-top: clamp(2rem, 5vh, 3rem);
+    align-items:start; margin-top: clamp(1.75rem, 4vh, 2.5rem);
   }
   .doc{
     border:1px solid var(--hair); background:var(--paper);
@@ -219,31 +218,16 @@
   .doc .quote{ color:var(--red-deep); font-weight:700; }
   .doc.term{ font-family:var(--mono); font-size:0.75rem; line-height:1.7; }
   .doc.term .sha{ color:var(--red-deep); }
-  .walllinks{ margin-top:1.5rem; font-size:0.9375rem; color:var(--muted); max-width:none; }
+  .walllinks{ margin-top:1rem; font-size:0.9375rem; color:var(--muted); max-width:none; }
 
   /* divergence counts */
   .counts{
-    margin-top: clamp(2rem, 5vh, 2.75rem);
+    margin-top: clamp(1.75rem, 4vh, 2.5rem);
     font-family:var(--mono); font-size:clamp(1rem, 2.6vw, 1.5rem); color:var(--ink);
     display:flex; flex-wrap:wrap; gap:0.4rem 1.1rem; align-items:baseline;
   }
   .counts b{ font-family:var(--display); font-weight:400; font-size:1.6em; color:var(--red); letter-spacing:0.01em; }
   .counts .arr{ color:var(--muted); }
-  .countnote{ margin-top:1rem; font-size:0.9375rem; color:var(--muted); max-width:56ch; }
-
-  /* gates */
-  ul.gates{ list-style:none; padding:0; margin: clamp(2rem, 5vh, 3rem) 0 0; }
-  ul.gates li{
-    display:grid; grid-template-columns:minmax(0,0.9fr) minmax(0,1.4fr);
-    gap:0.5rem 2rem; border-top:1px solid var(--hair); padding:1rem 0; align-items:baseline;
-  }
-  ul.gates li:last-child{ border-bottom:1px solid var(--hair); }
-  .gname{ font-family:var(--mono); font-size:0.9375rem; }
-  .gname::before{ content:"[" counter(gate) "/4] "; color:var(--red-deep); }
-  ul.gates{ counter-reset: gate; }
-  ul.gates li{ counter-increment: gate; }
-  .gdoes{ font-size:0.9375rem; }
-  .gatenote{ margin-top:1.25rem; font-size:0.9375rem; color:var(--muted); max-width:56ch; }
 
   /* close */
   .close-h{
@@ -255,7 +239,7 @@
   /* colophon */
   footer.colophon{
     border-top:1px solid var(--ink);
-    margin-top: clamp(4rem, 10vh, 7rem);
+    margin-top: clamp(3rem, 7vh, 5rem);
     padding:1rem 0 1.6rem;
     display:flex; justify-content:space-between; gap:1rem 2rem; flex-wrap:wrap;
     font-family:var(--mono); font-size:0.75rem; color:var(--muted);
@@ -268,7 +252,6 @@
     .doc{ --tilt:0deg !important; }
     ol.phases li{ grid-template-columns:2.6rem minmax(0,1fr); }
     .pyou{ grid-column:2; }
-    ul.gates li{ grid-template-columns:1fr; }
     button.copy{ width:100%; }
     .stamp .big{ font-size:1.7rem; }
   }
@@ -384,17 +367,15 @@
           <span class="pyou">you ship it</span>
         </li>
       </ol>
-      <p class="phasenote">Deployment itself is deliberately out of scope: it’s infra-specific.
-      The skill ends by handing you a checklist for wherever the site lives.</p>
     </section>
 
-    <!-- THE LOOP + PAPER TRAIL -->
+    <!-- THE LOOP + PAPER TRAIL + DIVERGENCE -->
     <section class="block" aria-labelledby="h-unseen">
       <h2 id="h-unseen">Nothing ships unseen.</h2>
       <p class="blocklede">The iron rule: <b>screenshot everything you build, before showing
       it.</b> The agent renders desktop and mobile, looks at its own output, and fixes what’s
-      broken first. The process also leaves a paper trail. These are this site’s real working
-      files, today.</p>
+      broken first. It never bets the brand on a single draw either: diverge first, commit
+      late, on the record. These are this site’s real working files, today.</p>
       <div class="wall">
         <article class="doc" style="--tilt:-0.8deg">
           <div class="dochead"><span>DESIGN.md</span><span>locked</span></div>
@@ -420,16 +401,6 @@
           <span class="sha">56bcf79</span> four divergent hero comps</p>
         </article>
       </div>
-      <p class="walllinks">The comps that lost are public:
-      <a href="comps/">round 1</a> · <a href="comps/press/">round 1.5</a> ·
-      <a href="comps/audition/">the type audition</a> · <a href="comps/device/">the device audition</a>.</p>
-    </section>
-
-    <!-- DIVERGENCE -->
-    <section class="block" aria-labelledby="h-median">
-      <h2 id="h-median">The median is the enemy.</h2>
-      <p class="blocklede">One comp is a guess. site-craft never bets the brand on a single
-      draw: it diverges first and commits late, at your checkpoints, on the record.</p>
       <p class="counts" aria-label="what this page's own hero survived">
         <span><b>4</b> directions</span><span class="arr">→</span>
         <span><b>4</b> color worlds</span><span class="arr">→</span>
@@ -438,27 +409,10 @@
         <span><b>4</b> devices</span><span class="arr">→</span>
         <span><b>1</b> hero</span>
       </p>
-      <p class="countnote">That’s what this page’s own hero survived. An olive palette, five
-      headlines, and a floating pause mark did not make it. Their funerals are in the git history.</p>
-    </section>
-
-    <!-- GATES -->
-    <section class="block" aria-labelledby="h-gates">
-      <h2 id="h-gates">Slop stops here.</h2>
-      <p class="blocklede">Before “done” may be said out loud, the page passes four audits:
-      findings fixed, not filed away.</p>
-      <ul class="gates">
-        <li><span class="gname" translate="no">web-design-guidelines</span>
-            <span class="gdoes">accessibility and UX compliance: skip links, focus, live regions, touch targets, the details everyone skips.</span></li>
-        <li><span class="gname" translate="no">impeccable audit</span>
-            <span class="gdoes">scored technical audit: contrast ratios computed from the rendered DOM, not asserted from the stylesheet.</span></li>
-        <li><span class="gname" translate="no">make-interfaces-feel-better</span>
-            <span class="gdoes">micro-interactions: interruptible transitions, named properties only, hit areas that forgive.</span></li>
-        <li><span class="gname" translate="no">writing-guidelines</span>
-            <span class="gdoes">copy review: runs after your edits, because your edits are the copy.</span></li>
-      </ul>
-      <p class="gatenote">Where a gate’s generic rule fights this design system, the system wins:
-      recorded as overridden, never silently skipped.</p>
+      <p class="walllinks">That’s what this page’s own hero survived. An olive palette, five
+      headlines, and a floating pause mark did not — their funerals are public:
+      <a href="comps/">round 1</a> · <a href="comps/press/">round 1.5</a> ·
+      <a href="comps/audition/">the type audition</a> · <a href="comps/device/">the device audition</a>.</p>
     </section>
 
     <!-- CLOSE -->
