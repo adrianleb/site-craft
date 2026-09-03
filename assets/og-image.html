@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>og-image source · render at exactly 1200×630 and save as og.png</title>
+<style>
+  @font-face{
+    font-family:"Anton"; font-style:normal; font-weight:400; font-display:block;
+    src:url("../fonts/anton-latin.woff2") format("woff2");
+  }
+  @font-face{
+    font-family:"Wix Madefor Text"; font-style:normal; font-weight:400 800; font-display:block;
+    src:url("../fonts/wix-madefor-text-latin.woff2") format("woff2");
+  }
+  @font-face{
+    font-family:"Fragment Mono"; font-style:normal; font-weight:400; font-display:block;
+    src:url("../fonts/fragment-mono-latin.woff2") format("woff2");
+  }
+  :root{
+    --paper: oklch(1 0 0);
+    --ink: oklch(0.2 0.005 60);
+    --red: oklch(0.55 0.21 29);
+    --red-deep: oklch(0.48 0.19 29);
+    --muted: oklch(0.44 0.06 29);
+    --hair: oklch(0.2 0.005 60 / 0.25);
+  }
+  *{ margin:0; box-sizing:border-box; }
+  body{
+    width:1200px; height:630px; overflow:hidden;
+    background:var(--paper); color:var(--ink);
+    font-family:"Wix Madefor Text",system-ui,sans-serif;
+    padding:52px 64px 48px; display:flex; flex-direction:column;
+  }
+  .slug{
+    display:flex; justify-content:space-between;
+    font-family:"Fragment Mono",monospace; font-size:19px; color:var(--muted);
+    border-bottom:2px solid var(--hair); padding-bottom:20px;
+  }
+  .slug b{ color:var(--ink); font-weight:400; }
+  .mid{ flex:1; display:flex; align-items:center; position:relative; }
+  h1{
+    font-family:"Anton",sans-serif; font-weight:400; text-transform:uppercase;
+    font-size:164px; line-height:0.96; letter-spacing:-0.005em;
+  }
+  .stamp{
+    position:absolute; left:772px; top:282px; transform:rotate(-9deg);
+    mix-blend-mode:multiply; border:5px solid var(--red); color:var(--red);
+    padding:14px 24px 15px; text-align:center;
+  }
+  .stamp::before{ content:""; position:absolute; inset:5px; border:2.5px solid var(--red); }
+  .stamp .big{ font-family:"Anton",sans-serif; font-size:56px; line-height:1; letter-spacing:0.02em; display:block; text-transform:uppercase; }
+  .stamp .small{ font-family:"Fragment Mono",monospace; font-size:15px; letter-spacing:0.08em; display:block; margin-top:8px; color:var(--red-deep); }
+  .foot{ display:flex; justify-content:space-between; align-items:flex-end; }
+  .cmd{ font-family:"Fragment Mono",monospace; font-size:26px; }
+  .cmd .dollar{ color:var(--red); }
+  .swatches{ display:flex; align-items:flex-end; }
+  .swatches .k, .swatches .r{ width:52px; height:30px; display:inline-block; }
+  .swatches .k{ background:var(--ink); }
+  .swatches .r{ background:var(--red); margin-left:-20px; mix-blend-mode:multiply; }
+</style>
+</head>
+<body>
+  <div class="slug"><span><b>site-craft</b> · marketing-site workflow for AI agents</span><span>JOB Nº 001</span></div>
+  <div class="mid">
+    <h1>Approved,<br>then shipped.</h1>
+    <div class="stamp"><span class="big">Approved</span><span class="small">PASS Nº 02 · 2026-07-13</span></div>
+  </div>
+  <div class="foot">
+    <span class="cmd"><span class="dollar">$</span> npx skills add adrianleb/site-craft-skill</span>
+    <span class="swatches"><span class="k"></span><span class="r"></span></span>
+  </div>
+</body>
+</html>

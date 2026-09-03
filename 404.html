@@ -1,0 +1,235 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>404 · site-craft</title>
+<meta name="robots" content="noindex">
+<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#ffffff">
+<!-- GitHub Pages serves this file at any missing path, so every URL below is
+     root-relative to the project base. Custom domain? Change the /site-craft-skill/
+     prefixes (SHIP.md, step 5). -->
+<link rel="icon" href="/site-craft-skill/favicon.svg" type="image/svg+xml">
+<link rel="preload" href="/site-craft-skill/fonts/anton-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/site-craft-skill/fonts/wix-madefor-text-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/site-craft-skill/fonts/fragment-mono-latin.woff2" as="font" type="font/woff2" crossorigin>
+<style>
+  @font-face{
+    font-family:"Anton"; font-style:normal; font-weight:400; font-display:swap;
+    src:url("/site-craft-skill/fonts/anton-latin.woff2") format("woff2");
+    unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+  }
+  @font-face{
+    font-family:"Wix Madefor Text"; font-style:normal; font-weight:400 800; font-display:swap;
+    src:url("/site-craft-skill/fonts/wix-madefor-text-latin.woff2") format("woff2");
+    unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+  }
+  @font-face{
+    font-family:"Fragment Mono"; font-style:normal; font-weight:400; font-display:swap;
+    src:url("/site-craft-skill/fonts/fragment-mono-latin.woff2") format("woff2");
+    unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+  }
+  :root{
+    --paper: oklch(1 0 0);
+    --ink: oklch(0.2 0.005 60);
+    --red: oklch(0.55 0.21 29);
+    --red-deep: oklch(0.48 0.19 29);
+    --muted: oklch(0.44 0.06 29);
+    --hair: oklch(0.2 0.005 60 / 0.25);
+    --display:"Anton",system-ui,sans-serif;
+    --body:"Wix Madefor Text",system-ui,sans-serif;
+    --mono:"Fragment Mono",ui-monospace,monospace;
+  }
+  *{ margin:0; box-sizing:border-box; }
+  html{ -webkit-tap-highlight-color:transparent; }
+  body{
+    background:var(--paper); color:var(--ink);
+    font-family:var(--body); line-height:1.55;
+    min-height:100svh; padding: clamp(1.25rem, 4vw, 3.5rem);
+    display:flex; flex-direction:column;
+    -webkit-font-smoothing:antialiased;
+  }
+  p{ text-wrap:pretty; }
+  a{ color:inherit; text-decoration-color:var(--red); text-decoration-thickness:1.5px; text-underline-offset:3px; }
+  a:hover{ color:var(--red-deep); }
+  a, .bod{ touch-action:manipulation; }
+  .slug nav a{ padding:0.7rem 0.15rem; margin:-0.7rem -0.15rem; }
+  :focus-visible{ outline:2px solid var(--red); outline-offset:2px; }
+  .skip{
+    position:absolute; left:-9999px; top:0.5rem; z-index:99;
+    background:var(--ink); color:var(--paper); padding:0.5rem 1rem; font-size:0.9375rem;
+  }
+  .skip:focus{ left:0.5rem; }
+
+  .slug{
+    display:flex; justify-content:space-between; gap:1rem; flex-wrap:wrap;
+    font-family:var(--mono); font-size:0.8125rem; color:var(--muted);
+    border-bottom:1px solid var(--hair); padding:0 0 0.75rem;
+  }
+  .slug b{ color:var(--ink); font-weight:400; }
+  .slug nav{ display:flex; gap:1.25rem; }
+
+  main{
+    flex:1; position:relative; max-width:72rem; width:100%;
+    padding-top: clamp(2.5rem, 7vh, 5rem);
+  }
+  h1{
+    font-family:var(--display); font-weight:400;
+    font-size: clamp(3.2rem, 8.6vw, 6rem);
+    line-height:0.96; letter-spacing:-0.005em;
+    text-transform:uppercase; max-width:11ch; text-wrap:balance;
+  }
+  .sub{ margin-top: clamp(1.75rem, 4vh, 2.5rem); max-width:56ch; font-size:1.125rem; }
+  .sub .lead{ font-weight:700; }
+  .sub .who{ color:var(--muted); }
+  .approve{ margin-top: clamp(2rem, 5vh, 3rem); display:grid; gap:1.25rem; max-width:56rem; }
+  a.back{
+    display:inline-block; justify-self:start;
+    font-weight:700; font-size:0.9375rem; text-decoration:none;
+    background:var(--red); color:var(--paper); padding:1rem 1.5rem;
+    transition: background-color 140ms ease-out, transform 140ms ease-out;
+  }
+  a.back:hover, a.back:active{ background:var(--red-deep); color:var(--paper); }
+  a.back:active{ transform:scale(0.96); }
+  .sig{ display:flex; align-items:baseline; gap:0.9rem; flex-wrap:wrap; color:var(--muted); font-size:0.9375rem; }
+  .pausei{ display:inline-block; width:11px; height:13px; border-left:4px solid var(--red); border-right:4px solid var(--red); transform:translateY(1px); }
+  .sig .line{ flex:1 1 12rem; border-bottom:1px solid var(--ink); min-height:1.4em; }
+
+  /* the pair — the device that lost the hero, retired to the page that never got approved */
+  .fieldwrap{ position:absolute; inset:0; pointer-events:none; overflow:hidden; }
+  .bod{
+    position:absolute; top:0; left:0; pointer-events:auto; cursor:grab;
+    mix-blend-mode:multiply; touch-action:none; user-select:none; will-change:transform;
+  }
+  .bod:active{ cursor:grabbing; }
+  .bod.pause{ width:104px; height:138px; display:flex; justify-content:space-between; }
+  .bod.pause i{ display:block; width:38%; background:var(--red); }
+  .bod.play{ width:126px; height:138px; background:var(--red); clip-path:polygon(0 0, 100% 50%, 0 100%); }
+
+  footer.colophon{
+    border-top:1px solid var(--ink); margin-top: clamp(2.5rem, 6vh, 4rem);
+    padding-top:1rem; display:flex; justify-content:space-between; gap:1rem 2rem; flex-wrap:wrap;
+    font-family:var(--mono); font-size:0.75rem; color:var(--muted);
+  }
+  @media (max-width:720px){
+    .bod.pause{ width:64px; height:86px; }
+    .bod.play{ width:78px; height:86px; }
+  }
+</style>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+
+  <header class="slug">
+    <span><b>site-craft</b> · marketing-site workflow for AI agents</span>
+    <nav aria-label="site">
+      <a href="/site-craft-skill/#workflow">the workflow</a>
+      <a href="https://github.com/adrianleb/site-craft-skill">GitHub</a>
+    </nav>
+  </header>
+
+  <main id="main">
+    <h1>Never approved.</h1>
+    <p class="sub"><span class="lead">There’s no page at this address.</span>
+    Whatever you were promised never passed a checkpoint: no brief, no comps, no gates,
+    no stamp. <span class="who">Two marks survived. They still move.</span></p>
+
+    <div class="approve">
+      <a class="back" href="/site-craft-skill/">Back to the approved page</a>
+      <p class="sig"><span class="pausei" aria-hidden="true"></span> This page waited for a signature that never came. <span class="line" aria-hidden="true"></span></p>
+    </div>
+
+    <div class="fieldwrap" id="field" aria-hidden="true">
+      <div class="bod pause" id="bp"><i></i><i></i></div>
+      <div class="bod play" id="bl"></div>
+    </div>
+  </main>
+
+  <footer class="colophon">
+    <span>Two inks on white paper · no passes recorded</span>
+    <span translate="no">JOB Nº 000 · PASS 00 · 2026-07-13</span>
+  </footer>
+
+<script>
+  // the physics pair (device audition D1, retired here at the round-2.5 checkpoint)
+  const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const field = document.getElementById('field');
+
+  const G = 2300, WALL = 0.66, FLOOR = 0.7;
+  const bodies = [
+    { el:document.getElementById('bp'), w:104, h:138 },
+    { el:document.getElementById('bl'), w:126, h:138 },
+  ].map((b,i) => Object.assign(b, {
+    x: field.clientWidth * (0.52 + i*0.17), y: -320 - i*260,
+    vx: (i? -30: 40), vy: 0, a: (i? 0.1: -0.12), va: 0, sleep:false, grab:null,
+  }));
+  if (matchMedia('(max-width: 720px)').matches){ bodies[0].w=64; bodies[0].h=86; bodies[1].w=78; bodies[1].h=86; }
+
+  function render(b){ b.el.style.transform = `translate(${b.x}px,${b.y}px) rotate(${b.a}rad)`; }
+
+  if (reduced){
+    // collapsed at rest, no motion — content fully present
+    const H = field.clientHeight;
+    bodies[0].x = field.clientWidth*0.50; bodies[0].y = H - bodies[0].h; bodies[0].a = 0.32;
+    bodies[1].x = field.clientWidth*0.68; bodies[1].y = H - bodies[1].h; bodies[1].a = -0.44;
+    bodies.forEach(render);
+  } else {
+    let last = performance.now();
+    function step(t){
+      const dt = Math.min((t-last)/1000, 0.03); last = t;
+      const W = field.clientWidth, H = field.clientHeight;
+      for (const b of bodies){
+        if (b.grab || b.sleep){ render(b); continue; }
+        b.vy += G*dt; b.x += b.vx*dt; b.y += b.vy*dt; b.a += b.va*dt;
+        if (b.x < 0){ b.x = 0; b.vx = -b.vx*WALL; b.va += b.vy*4e-4; }
+        if (b.x + b.w > W){ b.x = W - b.w; b.vx = -b.vx*WALL; b.va -= b.vy*4e-4; }
+        if (b.y + b.h > H){
+          b.y = H - b.h; b.vy = -b.vy*FLOOR; b.vx *= 0.9; b.va *= 0.75;
+          if (Math.abs(b.vy) < 50 && Math.abs(b.vx) < 25){ b.vx = b.vy = b.va = 0; b.sleep = true; b.a *= 0.6; }
+        }
+        b.va *= 0.995;
+        render(b);
+      }
+      const [p,q] = bodies;
+      const dx = (q.x+q.w/2)-(p.x+p.w/2), dy = (q.y+q.h/2)-(p.y+p.h/2);
+      const dist = Math.hypot(dx,dy) || 1, min = (p.w+q.w)/2 * 0.82;
+      if (dist < min && !p.grab && !q.grab){
+        const nx = dx/dist, ny = dy/dist, push = (min-dist)/2;
+        p.x -= nx*push; p.y -= ny*push; q.x += nx*push; q.y += ny*push;
+        const rvx = q.vx-p.vx, rvy = q.vy-p.vy, rel = rvx*nx + rvy*ny;
+        if (rel < 0){
+          const j = -1.82*rel/2;
+          p.vx -= j*nx; p.vy -= j*ny; q.vx += j*nx; q.vy += j*ny;
+          p.va -= rel*8e-4; q.va += rel*8e-4;
+          p.sleep = q.sleep = false;
+        }
+      }
+      requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+
+    for (const b of bodies){
+      b.el.addEventListener('pointerdown', e => {
+        b.grab = { dx: e.clientX - b.x, dy: e.clientY - b.y, hist: [] };
+        b.sleep = false; b.el.setPointerCapture(e.pointerId); e.preventDefault();
+      });
+      b.el.addEventListener('pointermove', e => {
+        if (!b.grab) return;
+        b.x = e.clientX - b.grab.dx; b.y = e.clientY - b.grab.dy;
+        b.grab.hist.push({x:b.x, y:b.y, t:performance.now()});
+        if (b.grab.hist.length > 5) b.grab.hist.shift();
+      });
+      b.el.addEventListener('pointerup', () => {
+        const h = b.grab && b.grab.hist;
+        if (h && h.length > 1){
+          const a = h[0], z = h[h.length-1], dt = Math.max((z.t-a.t)/1000, 0.016);
+          b.vx = (z.x-a.x)/dt * 0.9; b.vy = (z.y-a.y)/dt * 0.9;
+        }
+        b.grab = null;
+      });
+    }
+  }
+</script>
+</body>
+</html>

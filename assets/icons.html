@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>apple-touch-icon source · render at exactly 180×180 and save as apple-touch-icon.png</title>
+<style>
+  @font-face{
+    font-family:"Anton"; font-style:normal; font-weight:400; font-display:block;
+    src:url("../fonts/anton-latin.woff2") format("woff2");
+  }
+  @font-face{
+    font-family:"Fragment Mono"; font-style:normal; font-weight:400; font-display:block;
+    src:url("../fonts/fragment-mono-latin.woff2") format("woff2");
+  }
+  *{ margin:0; box-sizing:border-box; }
+  body{
+    width:180px; height:180px; overflow:hidden; background:#ffffff;
+    display:grid; place-items:center;
+  }
+  .stamp{
+    transform:rotate(-8deg); position:relative;
+    border:6px solid oklch(0.55 0.21 29); color:oklch(0.55 0.21 29);
+    padding:12px 14px 13px; text-align:center;
+  }
+  .stamp::before{ content:""; position:absolute; inset:5px; border:3px solid oklch(0.55 0.21 29); }
+  .big{ font-family:"Anton",sans-serif; font-size:27px; line-height:1; letter-spacing:0.02em; display:block; text-transform:uppercase; }
+  .small{ font-family:"Fragment Mono",monospace; font-size:9px; letter-spacing:0.06em; display:block; margin-top:5px; color:oklch(0.48 0.19 29); }
+</style>
+</head>
+<body>
+  <div class="stamp"><span class="big">Approved</span><span class="small">PASS Nº 02</span></div>
+</body>
+</html>
